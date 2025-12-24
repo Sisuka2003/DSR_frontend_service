@@ -1,0 +1,259 @@
+.dashboard-outer-section {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 100vh;
+  background-color: #10141d;
+  background-image: linear-gradient(
+      rgba(16, 20, 29, 0.9),
+      rgba(16, 20, 29, 0.9)
+    ),
+    url("../../blob.png");
+  background-repeat: no-repeat;
+  background-size: 90%;
+  background-position: -350% 80%;
+
+  .header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 10%;
+
+    .header-logo {
+      width: 50%;
+      height: 100%;
+      background-image: url("../../logo.png");
+      background-repeat: no-repeat;
+      background-position: left;
+      background-size: contain;
+    }
+
+    .header-directions {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      color: white;
+      // background-color: red;
+    }
+  }
+  .dashboard-section-middle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 80%;
+    overflow: hidden;
+
+    .dashboard-section-middle-quote {
+      text-align: left;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+      height: 100%;
+      padding-left: 10%;
+
+      .dashboard-section-middle-quote-title {
+        font-size: 350%;
+        margin: 0;
+        font-weight: bold;
+        color: #ffffff;
+      }
+
+      .dashboard-section-middle-quote-description {
+        font-size: 100%;
+        color: #c4c4c4;
+        margin: 0;
+        margin-top: 2%;
+      }
+    }
+
+    .dashboard-section-middle-illustration {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      width: 50%;
+      height: 100%;
+      background-image: url("../../blob.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    /* Keyframes for floating */
+    @keyframes float {
+      0% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      25% {
+        transform: translateY(-10px) rotate(-2deg);
+      }
+      50% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      75% {
+        transform: translateY(10px) rotate(2deg);
+      }
+      100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+    }
+  }
+  .dashboard-section-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 15%;
+
+    .dashboard-section-bottom-credentials-form {
+      display: flex;
+      width: 100%;
+      gap: 1rem;
+      align-items: center;
+      justify-content: center;
+
+      .dashboard-section-bottom-credentials-form-select {
+        padding: 0.7rem 1rem;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        outline: none;
+        min-width: 320px;
+        width: 30%;
+        &:focus {
+          border-color: #9fc6ff;
+        }
+        background-color: transparent;
+        color: #ffffff;
+      }
+
+      .dashboard-section-bottom-credentials-form-input {
+        padding: 0.7rem 1rem;
+        border-radius: 8px;
+        outline: none;
+        border: 1px solid #ccc;
+        &:focus {
+          border-color: #4a6fa5;
+        }
+        &::placeholder {
+          color: #ffffff;
+        }
+        min-width: 320px;
+        width: 30%;
+        background-color: transparent;
+        color: #ffffff;
+      }
+
+      .dashboard-section-bottom-credentials-form-submit {
+        padding: 0.7rem 4rem;
+        border-radius: 8px;
+        border: none;
+        background-color: #4a6fa5;
+        color: #fff;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s ease;
+
+        &:hover {
+          background-color: #3b5d8a;
+        }
+      }
+    }
+  }
+
+  .dashboard-section-popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.316);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    width: 100%;
+    height: 100vh;
+
+    .dashboard-section-popup-container {
+      position: relative;
+      color: white;
+      background: rgba(5, 5, 5, 0.389);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 18px;
+      min-width: 420px;
+      max-width: 600px;
+      box-shadow: 0 10px 100px rgb(40, 65, 88),
+        inset 0 0 0 1px rgba(255, 255, 255, 0);
+      animation: popupFadeIn 0.35s ease-out;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 20%;
+      height: 40%;
+      padding: 5%;
+
+      .dashboard-section-popup-container-form-input-username,
+      .dashboard-section-popup-container-form-input-password {
+        padding: 0.7rem 1rem;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        outline: none;
+        min-width: 320px;
+        width: 30%;
+        margin-top: 5%;
+        &:focus {
+          border-color: #9fc6ff;
+        }
+        background-color: transparent;
+        color: #ffffff;
+      }
+
+      .dashboard-section-popup-container-credentials-form-submit {
+        padding: 0.7rem 4rem;
+        border-radius: 8px;
+        margin-top: 10%;
+        border: none;
+        background-color: #4a6fa5;
+        color: #fff;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        min-width: 355px;
+        width: 40%;
+        &:hover {
+          background-color: #3b5d8a;
+        }
+      }
+    }
+    @keyframes popupFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9) translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+  }
+}
+
+.dashboard h1 {
+  margin: 10px 0;
+  font-size: 2rem;
+}
