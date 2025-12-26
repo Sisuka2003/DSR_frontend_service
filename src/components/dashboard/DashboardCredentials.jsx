@@ -43,7 +43,7 @@ class DashboardCredentials extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-  const { selectedOrgId, identificationCode } = this.state;
+    const { selectedOrgId, identificationCode } = this.state;
     const userInput = this.inputRef.current.value;
 
     const payload = {
@@ -66,23 +66,29 @@ class DashboardCredentials extends React.Component {
 
     LoginService.LoginDataSubject(payload)
       .then((response) => {
-        console.log("Login success:", response.data);
+        console.log("Login success:", response.data.data);
+
+        if (this.props.onLoginSuccess) {
+          this.props.onLoginSuccess(response.data.data);
+        }
       })
       .catch((error) => {
         console.error("Login failed:", error.response || error);
-        alert(error.response?.data?.message || "Login failed. Please try again.");
+        alert(
+          error.response?.data?.message || "Login failed. Please try again."
+        );
       });
   };
 
   render() {
     return (
-      <div className="dashboard-section-bottom">
+      <div className="dashboard-div-bottom">
         <form
-          className="dashboard-section-bottom-credentials-form"
+          className="dashboard-div-bottom-credentials-form"
           onSubmit={this.handleSubmit}
         >
           <select
-            className="dashboard-section-bottom-credentials-form-select"
+            className="dashboard-div-bottom-credentials-form-select"
             onChange={this.handleOrgChange}
             required
           >
@@ -95,13 +101,13 @@ class DashboardCredentials extends React.Component {
           </select>
           <input
             ref={this.inputRef}
-            className="dashboard-section-bottom-credentials-form-input"
+            className="dashboard-div-bottom-credentials-form-input"
             type="text"
             placeholder={this.state.placeHolderText}
             required
           />
           <input
-            className="dashboard-section-bottom-credentials-form-submit"
+            className="dashboard-div-bottom-credentials-form-submit"
             type="submit"
             value="Login"
           />
