@@ -67,21 +67,8 @@ class Dashboard extends React.Component {
           }`}
         >
           <Header />
-          <UserProfile firstName={this.state.customerData?.dsCode?.firstName} lastName={this.state.customerData?.dsCode?.lastName} />
-          {/* <div className="dashboard-result-div-middle">
-            <div className="dashboard-result-div-middle-1"></div>
-            <div className="dashboard-result-div-middle-2">
-              
-            </div>
-            <div className="dashboard-result-div-middle-3"></div>
-            <div className="dashboard-result-div-middle-4"></div>
-            <div className="dashboard-result-div-middle-5"></div>
-            {/* <h1>
-              {" "}
-              Hello, {this.state.customerData?.dsCode?.firstName}{" "}
-              {this.state.customerData?.dsCode?.lastName}!!
-            </h1>
-            <p> Please find your latest attached personal data with regards to {this.state.customerData?.dcCode?.orgName} of Sri Lanka upto the date of {this.state.customerData?.dcCode?.lastUpdatedTime}</p> </div>*/}
+          <UserProfile customerData={this.state.customerData}/>
+          
         </div>
       </section>
     );
