@@ -67,7 +67,7 @@ class Dashboard extends React.Component {
           }`}
         >
           <Header />
-          <UserProfile customerData={this.state.customerData}/>
+          <UserProfile customerData={this.state.customerData} />
           
         </div>
       </section>
