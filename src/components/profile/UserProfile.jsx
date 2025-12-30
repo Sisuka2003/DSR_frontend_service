@@ -152,24 +152,54 @@ class UserProfile extends React.Component {
       dcCode: this.props.customerData?.dcCode?.id,
       status: "2",
     };
-    
-    DataSubjectOperations.deleteDataSubjectData(payload).then((response)=>{
 
-    }).catch((error)=> {
-      console.error("Deletion failed:", error.response || error);
+    DataSubjectOperations.deleteDataSubjectData(payload)
+      .then((response) => {})
+      .catch((error) => {
+        console.error("Deletion failed:", error.response || error);
         alert(
-          error.response?.data?.message ||
-            "Deletion failed. Please try again."
+          error.response?.data?.message || "Deletion failed. Please try again."
         );
-    });
+      });
 
-    
     this.setState({
       isModify: false,
       isDelete: false,
       editableData: {},
       deleteConfirmed: false,
     });
+  };
+
+  handleOnReportGeneration = (event) => {
+
+    const payload = {
+      dsCode: this.props.customerData?.dsCode?.id,
+      dcCode: this.props.customerData?.dcCode?.id,
+    };
+    DataSubjectOperations.generateDataSubjectDataReport(payload)
+      .then((response) => {
+        const blob = new Blob([response.data], {
+          type: "application/pdf",
+        });
+
+        const url = window.URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "DSR_Report.pdf";
+        document.body.appendChild(link);
+        link.click();
+
+        link.remove();
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((error) => {
+        console.error("Report Generation failed:", error.response || error);
+        alert(
+          error.response?.data?.message ||
+            "Report Generation failed. Please try again."
+        );
+      });
   };
 
   render() {
@@ -211,7 +241,10 @@ class UserProfile extends React.Component {
             </div>
           </div>
           <div className="user-profile-result-div-middle-2-bottom">
-            <button className="user-profile-result-div-middle-2-bottom-btn">
+            <button
+              className="user-profile-result-div-middle-2-bottom-btn"
+              onClick={this.handleOnReportGeneration}
+            >
               {" "}
               Download PDF
             </button>

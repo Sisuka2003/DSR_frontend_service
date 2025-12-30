@@ -23,6 +23,14 @@ class Dashboard extends React.Component {
   handleLoginSuccess = (data) => {
     this.setState({ showResultSection: true, customerData: data });
   };
+
+  handleHomeClick = () => {
+    console.log("Navigate to home")
+  this.setState({
+    showResultSection: false,
+    customerData: null, 
+  });
+};
   render() {
     return (
       <section className="dashboard-outer-section">
@@ -31,7 +39,7 @@ class Dashboard extends React.Component {
             this.state.showResultSection ? "deactive" : ""
           }`}
         >
-          <Header openPopup={this.openPopup} />
+          <Header openPopup={this.openPopup} onHomeClick={this.handleHomeClick}/>
           <div className="dashboard-div-middle">
             <div className="dashboard-div-middle-quote">
               <p className="dashboard-div-middle-quote-title">
@@ -66,8 +74,8 @@ class Dashboard extends React.Component {
             this.state.showResultSection ? "active" : ""
           }`}
         >
-          <Header />
-          <UserProfile customerData={this.state.customerData} />
+          <Header openPopup={this.openPopup} onHomeClick={this.handleHomeClick}/>
+          <UserProfile customerData={this.state.customerData}/>
           
         </div>
       </section>

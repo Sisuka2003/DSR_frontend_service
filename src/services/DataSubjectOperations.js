@@ -21,13 +21,23 @@ class DataSubjectOperations {
     });
   }
 
-  deleteDataSubjectData(payload){
+  deleteDataSubjectData(payload) {
     console.log("Delete data subject data payload:", payload);
     return axios.delete(`${API_BASE_URL}/deleteDataSubjectData`, {
-        data : payload,
-        headers : {
-            "Content-Type":"application/json",
-        },
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+
+  generateDataSubjectDataReport(payload) {
+    console.log("Generate Report for data subject data Payload:", payload);
+    return axios.post(`${API_BASE_URL}/generateDsrReport`, payload, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      responseType: "blob",
     });
   }
 }
