@@ -229,6 +229,548 @@
           transform: scale(1) translateY(0);
         }
       }
+
+      .dashboard-div-popup-container.deactive {
+        opacity: 0;
+        transform: scale(0.9);
+        pointer-events: none;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .data-controller-profile-result-div-middle {
+        background-image: url("../../wallpaper.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 120%;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        position: fixed;
+        z-index: 10001;
+
+        .data-controller-profile-result-div-middle-1 {
+          width: 10%;
+          height: 70%;
+        }
+        .data-controller-profile-result-div-middle-3 {
+          width: 3%;
+          height: 70%;
+        }
+        .data-controller-profile-result-div-middle-5 {
+          width: 5%;
+          height: 50%;
+        }
+
+        .data-controller-profile-result-div-middle-2 {
+          width: 30%;
+          height: 80%;
+          background: rgb(255, 255, 255);
+          border-radius: 15px;
+          overflow: hidden;
+          box-shadow: 0 10px 100px rgb(40, 65, 88),
+            inset 0 0 0 1px rgba(255, 255, 255, 0);
+
+          .data-controller-profile-result-div-middle-2-top {
+            width: 100%;
+            height: 60%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+            .data-controller-profile-result-div-middle-2-top-image {
+              width: 43%;
+              height: 55%;
+              border-radius: 100%;
+              margin-top: 8%;
+              background-image: url("../../profile.png");
+              background-repeat: no-repeat;
+              background-position: center;
+              background-size: contain;
+            }
+
+            .data-controller-profile-result-div-middle-2-top-name {
+              width: 100%;
+              height: 25%;
+              margin-top: 3%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-align: center;
+              font-size: 150%;
+              font-weight: bold;
+              border-bottom: 3px solid rgb(185, 185, 185);
+            }
+
+            .data-controller-profile-result-div-middle-2-top-name-reduced-font {
+              width: 100%;
+              height: 25%;
+              margin-top: 3%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-align: center;
+              font-size: 130%;
+              font-weight: bold;
+              border-bottom: 3px solid rgb(185, 185, 185);
+            }
+          }
+
+          .data-controller-profile-result-div-middle-2-middle {
+            width: 100%;
+            height: 20%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 90%;
+
+            .data-controller-profile-result-div-middle-2-middle-center {
+              width: 90%;
+              height: 70%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-align: center;
+            }
+          }
+
+          .data-controller-profile-result-div-middle-2-middle-reduced-font {
+            width: 100%;
+            height: 20%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 80%;
+
+            .data-controller-profile-result-div-middle-2-middle-center {
+              width: 90%;
+              height: 70%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-align: center;
+            }
+          }
+
+          .data-controller-profile-result-div-middle-2-bottom {
+            width: 100%;
+            height: 20%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+            .data-controller-profile-result-div-middle-2-bottom-btn {
+              width: 80%;
+              height: 40%;
+              border-radius: 15px;
+              border-style: none;
+              background-color: rgb(40, 65, 88);
+              color: white;
+              text-align: center;
+              cursor: pointer;
+              outline: none;
+            }
+          }
+        }
+        .data-controller-profile-result-div-middle-4 {
+          width: 60%;
+          height: 80%;
+          background: rgb(255, 255, 255);
+          border-radius: 15px;
+          box-shadow: 50px 5px 100px rgba(40, 65, 88, 0.664),
+            inset 0 0 0 1px rgba(255, 255, 255, 0);
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+          align-items: center;
+          overflow: hidden;
+
+          .data-controller-profile-result-div-middle-4-top {
+            width: 100%;
+            height: 85%;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            padding-left: 10%;
+            padding-top: 3%;
+            text-align: left;
+
+            .data-controller-profile-result-div-middle-4-top-data-table {
+              width: 90%;
+              height: 80%;
+              font-size: 80%;
+              .data-controller-profile-result-div-middle-4-top-data-table-key-cell {
+                text-align: left;
+                width: 15%;
+              }
+
+              .data-controller-profile-result-div-middle-4-top-data-table-key-cell-reduced-font {
+                width: 20%;
+              }
+              .data-controller-profile-result-div-middle-4-top-data-table-colon-cell {
+                width: 5%;
+              }
+
+              .data-controller-profile-result-div-middle-4-top-data-table-value-cell {
+                width: 80%;
+                .value-input {
+                  width: 90%;
+                  height: 70%;
+                  border-radius: 5px;
+                  border-style: solid;
+                  border-color: rgb(235, 235, 235);
+                  font-size: 90%;
+                }
+              }
+
+              .data-controller-profile-result-div-middle-4-top-data-table-value-cell-reduced-font {
+                width: 80%;
+                .value-input {
+                  width: 80%;
+                  height: 70%;
+                  border-radius: 5px;
+                  border-style: solid;
+                  border-color: rgb(235, 235, 235);
+                  font-size: 90%;
+                }
+              }
+            }
+          }
+
+          .data-controller-profile-result-div-middle-4-bottom {
+            width: 100%;
+            height: 15%;
+            border-top: 3px solid rgb(185, 185, 185);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .data-controller-profile-result-div-middle-4-bottom-form {
+              width: 100%;
+              height: 50%;
+              display: flex;
+              justify-content: flex-end;
+              align-items: left;
+              padding-right: 2%;
+
+              .data-controller-profile-result-div-middle-4-bottom-dropdown {
+                width: 30%;
+                height: 100%;
+                border-radius: 5px;
+                border-style: solid;
+                background-color: rgb(40, 65, 88);
+                color: white;
+                text-align: center;
+                outline: none;
+                cursor: pointer;
+              }
+              .data-controller-profile-result-div-middle-4-bottom-btn {
+                width: 30%;
+                height: 100%;
+                border-radius: 5px;
+                border-style: none;
+                background-color: rgb(40, 65, 88);
+                color: white;
+                text-align: center;
+                cursor: pointer;
+                margin-left: 2%;
+              }
+            }
+          }
+        }
+
+        .data-controller-profile-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100vh;
+
+          background-color: rgba(0, 0, 0, 0.5);
+
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.4s ease;
+
+          z-index: 100; // below popup
+        }
+
+        .data-controller-profile-overlay.active {
+          opacity: 1;
+          visibility: visible;
+          backdrop-filter: blur(2px);
+          -webkit-backdrop-filter: blur(2px);
+        }
+
+        .data-controller-profile-popup-div {
+          width: 0%;
+          height: 100%;
+          overflow: hidden;
+          visibility: hidden;
+          background: #f7f9fc;
+          padding: 0;
+          white-space: nowrap;
+          transform: translateX(40px);
+          transition: all 0.5s ease;
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+          align-items: center;
+          text-align: left;
+          z-index: 101;
+
+          .data-controller-profile-popup-div-top-outer {
+            width: 100%;
+            height: 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 2px solid #31383d;
+          }
+
+          .data-controller-profile-popup-div-middle-outer {
+            width: 100%;
+            height: 80%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            background-color: #9399a300;
+
+            .data-controller-profile-popup-div-middle-data-table {
+              width: 90%;
+              height: 150%;
+              background-color: #9399a300;
+
+              .data-controller-profile-popup-div-middle-data-table-key-cell {
+                width: 30%;
+                font-size: 90%;
+                padding-left: 2%;
+              }
+
+              .data-controller-profile-popup-div-middle-data-table-colon-cell {
+                width: 5%;
+              }
+
+              .data-controller-profile-popup-div-middle-data-table-value-cell {
+                width: 65%;
+                .value-input {
+                  width: 90%;
+                  height: 50%;
+                  border-radius: 5px;
+                  border-style: solid;
+                  border-color: rgb(235, 235, 235);
+                  font-size: 90%;
+                }
+              }
+            }
+          }
+
+          .data-controller-profile-popup-div-bottom-outer {
+            width: 100%;
+            height: 15%;
+            background-color: #83888b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .data-controller-profile-popup-div-bottom-outer-form {
+              width: 100%;
+              height: 100%;
+              display: flex;
+              justify-content: space-around;
+              align-items: center;
+
+              .data-controller-profile-popup-div-bottom-outer-form-btn {
+                width: 40%;
+                height: 40%;
+                border-radius: 5px;
+                border: none;
+                background-color: rgb(40, 65, 88);
+                color: white;
+                cursor: pointer;
+              }
+
+              .user-profile-popup-div-bottom-outer-form-btn:hover {
+                background-color: rgb(30, 50, 70);
+              }
+            }
+          }
+        }
+
+        .data-controller-profile-popup-div.active {
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+          align-items: center;
+          text-align: left;
+          width: 50%;
+          height: 100%;
+          visibility: visible;
+          white-space: normal;
+          opacity: 1;
+          transform: translateX(0);
+          background: #ffffff;
+
+          .data-controller-profile-popup-div-top-outer {
+            width: 100%;
+            height: 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 2px solid #31383d;
+          }
+
+          .data-controller-profile-popup-div-middle-outer {
+            width: 100%;
+            height: 80%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            background-color: #9399a300;
+
+            .data-controller-profile-popup-div-middle-data-table {
+              width: 90%;
+              height: 80%;
+              background-color: #9399a300;
+
+              .data-controller-profile-popup-div-middle-data-table-key-cell {
+                width: 30%;
+                font-size: 80%;
+                padding-left: 2%;
+              }
+
+              .data-controller-profile-popup-div-middle-data-table-colon-cell {
+                width: 5%;
+              }
+
+              .data-controller-profile-popup-div-middle-data-table-value-cell {
+                width: 65%;
+                .value-input {
+                  width: 90%;
+                  height: 50%;
+                  border-radius: 5px;
+                  border-style: solid;
+                  border-color: rgb(235, 235, 235);
+                  font-size: 80%;
+                }
+              }
+            }
+          }
+
+          .data-controller-profile-popup-div-bottom-outer {
+            width: 100%;
+            height: 15%;
+            background-color: #83888b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .data-controller-profile-popup-div-bottom-outer-form {
+              width: 100%;
+              height: 100%;
+              display: flex;
+              justify-content: space-around;
+              align-items: center;
+
+              .data-controller-profile-popup-div-bottom-outer-form-btn {
+                width: 40%;
+                height: 40%;
+                border-radius: 5px;
+                border: none;
+                background-color: rgb(40, 65, 88);
+                color: white;
+                cursor: pointer;
+              }
+
+              .data-controller-profile-popup-div-bottom-outer-form-btn:hover {
+                background-color: rgb(30, 50, 70);
+              }
+            }
+          }
+        }
+
+        .data-controller-profile-delete-popup {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 50%;
+          height: 50vh;
+          position: fixed;
+          z-index: -100;
+          opacity: 0;
+          background-color: white;
+          transition: 0s ease-in;
+        }
+
+        .data-controller-profile-delete-popup.active {
+          width: 50%;
+          height: 50vh;
+          position: fixed;
+          z-index: 102;
+          opacity: 1;
+          background-color: white;
+          transition: 0.3s ease-in;
+          border-radius: 15px;
+
+          .data-controller-profile-delete-popup-active-form {
+            width: 90%;
+            height: 90%;
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+            .data-controller-profile-delete-popup-active-form-div-checkbox {
+              width: 100%;
+              height: 15%;
+              display: flex;
+              text-align: center;
+              justify-content: center;
+              align-items: center;
+              .data-controller-profile-delete-popup-active-form-div-checkbox-1 {
+                width: 3%;
+                height: 100%;
+              }
+            }
+
+            .data-controller-profile-delete-popup-active-form-div-buttons {
+              width: 100%;
+              height: 15%;
+              margin-top: 2%;
+              padding-top: 2%;
+              display: flex;
+              text-align: center;
+              justify-content: space-around;
+              align-items: center;
+
+              .data-controller-profile-delete-popup-active-form-div-buttons-btn {
+                width: 40%;
+                height: 100%;
+                border-radius: 5px;
+                border: none;
+                background-color: rgb(40, 65, 88);
+                color: white;
+                cursor: pointer;
+              }
+
+              .data-controller-profile-delete-popup-active-form-div-buttons-btn:hover {
+                background-color: rgb(30, 50, 70);
+              }
+            }
+          }
+        }
+      }
     }
   }
 
@@ -268,8 +810,6 @@
     .header {
       background-color: #10141d;
     }
-
-   
   }
 }
 .dashboard h1 {

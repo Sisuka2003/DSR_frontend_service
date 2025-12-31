@@ -154,7 +154,20 @@ class UserProfile extends React.Component {
     };
 
     DataSubjectOperations.deleteDataSubjectData(payload)
-      .then((response) => {})
+      .then((response) => {
+        alert("Customer Data Deletion request Sent Successfully.");
+        console.log("Deletion request success:", response.data);
+        this.setState({
+          selectedOption: 0,
+          isModify: false,
+          isDelete: false,
+          editableData: {},
+          deleteConfirmed: false,
+        });
+        if (this.props.onDeleteSuccess) {
+          this.props.onDeleteSuccess();
+        }
+      })
       .catch((error) => {
         console.error("Deletion failed:", error.response || error);
         alert(
@@ -171,7 +184,6 @@ class UserProfile extends React.Component {
   };
 
   handleOnReportGeneration = (event) => {
-
     const payload = {
       dsCode: this.props.customerData?.dsCode?.id,
       dcCode: this.props.customerData?.dcCode?.id,
