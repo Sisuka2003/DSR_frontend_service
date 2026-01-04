@@ -290,6 +290,47 @@
               background-repeat: no-repeat;
               background-position: center;
               background-size: contain;
+              position: relative;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              .notification-bell {
+                font-size: 200%;
+                cursor: pointer;
+                position: absolute;
+                bottom: 70%;
+                right: 5%;
+                background-color: #283248;
+                border-radius: 100%;
+                padding-top: 2%;
+                padding-left: 2%;
+                padding-right: 2%;
+                padding-bottom: 3%;
+              }
+
+              .notification-bell:hover {
+                background-color: #3e4f71;
+                transition: 0.3s;
+              }
+
+              .notification-badge {
+                position: absolute;
+                top: 5%;
+                right: 2%;
+                background: #86a0d8;
+                color: white;
+                font-size: 100%;
+                font-weight: bold;
+                border-radius: 50%;
+                min-width: 18px;
+                height: 18px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 4px 4px;
+                box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+              }
             }
 
             .data-controller-profile-result-div-middle-2-top-name {
@@ -765,6 +806,442 @@
               }
 
               .data-controller-profile-delete-popup-active-form-div-buttons-btn:hover {
+                background-color: rgb(30, 50, 70);
+              }
+            }
+          }
+        }
+
+        .data-controller-profile-data-subjects-alert-div {
+          width: 0%;
+          height: 100%;
+          overflow: hidden;
+          visibility: hidden;
+          background: #f7f9fc;
+          padding: 0;
+          white-space: nowrap;
+          transform: translateX(40px);
+          transition: all 0.5s ease;
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+          align-items: center;
+          text-align: left;
+          z-index: 101;
+
+          .data-controller-profile-data-subjects-alert-div-top-outer {
+            width: 100%;
+            height: 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 2px solid #31383d;
+
+            .data-controller-profile-data-subjects-alert-div-top-outer-form {
+              width: 80%;
+              height: 100%;
+              display: flex;
+              justify-content: space-around;
+              align-items: center;
+
+              .data-controller-profile-data-subjects-alert-div-top-outer-form-search-field {
+                width: 55%;
+                border-radius: 10px;
+                height: 35%;
+                border-style: solid;
+                outline: none;
+              }
+              .data-controller-profile-data-subjects-alert-div-top-outer-form-search-btn {
+                width: 20%;
+                height: 40%;
+                border-radius: 10px;
+                background-color: #31383d;
+                outline: none;
+                border: none;
+                color: white;
+                cursor: pointer;
+              }
+
+              .data-controller-profile-data-subjects-alert-div-top-outer-form-cancel-btn {
+                width: 15%;
+                height: 40%;
+                border: none;
+                outline: none;
+                color: white;
+                border-radius: 10px;
+                background-color: #94373d;
+                outline: none;
+                border: none;
+                cursor: pointer;
+              }
+            }
+          }
+
+          .data-controller-profile-data-subjects-alert-div-middle-outer {
+            width: 100%;
+            height: 80%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            overflow-x: hidden;
+            flex-direction: column;
+            overflow-y: scroll;
+
+            .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-rejected {
+              display: flex;
+              justify-content: center;
+              padding: 12px;
+              align-items: center;
+              width: 90%;
+              height: 8%;
+              color: black;
+              background-color: #ff59595a;
+              margin-top: 2%;
+              border-radius: 10px;
+              overflow: hidden;
+              cursor: pointer;
+            }
+
+            .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-approved {
+              display: flex;
+              justify-content: center;
+              padding: 12px;
+              align-items: center;
+              width: 90%;
+              height: 8%;
+              color: black;
+              background-color: #9bfb0068;
+              margin-top: 2%;
+              border-radius: 10px;
+              overflow: hidden;
+              cursor: pointer;
+            }
+
+            .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-pending {
+              display: flex;
+              justify-content: center;
+              padding: 12px;
+              align-items: center;
+              width: 90%;
+              height: 8%;
+              color: black;
+              background-color: #b3daff5b;
+              margin-top: 2%;
+              border-radius: 10px;
+              overflow: hidden;
+              cursor: pointer;
+            }
+
+            .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-queued {
+              display: flex;
+              justify-content: center;
+              padding: 12px;
+              align-items: center;
+              width: 90%;
+              height: 8%;
+              color: black;
+              background-color: #9e95ff5f;
+              margin-top: 2%;
+              border-radius: 10px;
+              overflow: hidden;
+              cursor: pointer;
+            }
+
+            .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-field-name {
+              width: 25%;
+              height: 100%;
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+              overflow: hidden;
+            }
+            .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-ds-unique {
+              width: 30%;
+              height: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              overflow: hidden;
+            }
+
+            .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-activity-status {
+              width: 15%;
+              height: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              overflow: hidden;
+              pointer-events: none;
+
+              .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity {
+                width: 32%;
+                height: 60%;
+                background-color: rgba(113, 122, 134, 0.137);
+                border-radius: 100%;
+                padding: 8%;
+              }
+            }
+
+            .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action {
+              width: 30%;
+              height: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-dropdown {
+                padding: 6px 20px;
+                outline: none;
+                text-align: left;
+                border-radius: 10px;
+                cursor: pointer;
+              }
+            }
+          }
+
+          .data-controller-profile-data-subjects-alert-div-bottom-outer {
+            width: 100%;
+            height: 15%;
+            background-color: #83888b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .data-controller-profile-data-subjects-alert-div-bottom-outer-form {
+              width: 100%;
+              height: 100%;
+              display: flex;
+              justify-content: space-around;
+              align-items: center;
+
+              .data-controller-profile-data-subjects-alert-div-bottom-outer-form-btn {
+                width: 40%;
+                height: 40%;
+                border-radius: 5px;
+                border: none;
+                background-color: rgb(40, 65, 88);
+                color: white;
+                cursor: pointer;
+              }
+
+              .user-profile-data-subjects-alert-div-bottom-outer-form-btn:hover {
+                background-color: rgb(30, 50, 70);
+              }
+            }
+          }
+        }
+
+        .data-controller-profile-data-subjects-alert-div.active {
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+          align-items: center;
+          text-align: left;
+          width: 80%;
+          height: 100%;
+          visibility: visible;
+          white-space: normal;
+          opacity: 1;
+          transform: translateX(0);
+          background: #ffffff;
+
+          .data-controller-profile-data-subjects-alert-div-top-outer {
+            width: 100%;
+            height: 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border-bottom: 2px solid #31383d;
+
+            .data-controller-profile-data-subjects-alert-div-top-outer-form {
+              width: 80%;
+              height: 100%;
+              display: flex;
+              justify-content: space-around;
+              align-items: center;
+
+              .data-controller-profile-data-subjects-alert-div-top-outer-form-search-field {
+                width: 55%;
+                border-radius: 10px;
+                height: 35%;
+                border-style: solid;
+                outline: none;
+              }
+              .data-controller-profile-data-subjects-alert-div-top-outer-form-search-btn {
+                width: 20%;
+                height: 40%;
+                border-radius: 10px;
+                background-color: #31383d;
+                outline: none;
+                border: none;
+                color: white;
+                cursor: pointer;
+              }
+
+              .data-controller-profile-data-subjects-alert-div-top-outer-form-cancel-btn {
+                width: 15%;
+                height: 40%;
+                border: none;
+                outline: none;
+                color: white;
+                border-radius: 10px;
+                background-color: #94373d;
+                outline: none;
+                border: none;
+                cursor: pointer;
+              }
+            }
+          }
+
+          .data-controller-profile-data-subjects-alert-div-middle-outer {
+            width: 100%;
+            height: 80%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            overflow-x: hidden;
+            flex-direction: column;
+            overflow-y: scroll;
+
+            .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-rejected {
+              display: flex;
+              justify-content: center;
+              padding: 12px;
+              align-items: center;
+              width: 90%;
+              height: 8%;
+              color: black;
+              background-color: #ff59595a;
+              margin-top: 2%;
+              border-radius: 10px;
+              overflow: hidden;
+              cursor: pointer;
+            }
+
+            .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-approved {
+              display: flex;
+              justify-content: center;
+              padding: 12px;
+              align-items: center;
+              width: 90%;
+              height: 8%;
+              color: black;
+              background-color: #9bfb0068;
+              margin-top: 2%;
+              border-radius: 10px;
+              overflow: hidden;
+              cursor: pointer;
+            }
+
+            .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-pending {
+              display: flex;
+              justify-content: center;
+              padding: 12px;
+              align-items: center;
+              width: 90%;
+              height: 8%;
+              color: black;
+              background-color: #b3daff5b;
+              margin-top: 2%;
+              border-radius: 10px;
+              overflow: hidden;
+              cursor: pointer;
+            }
+
+            .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-queued {
+              display: flex;
+              justify-content: center;
+              padding: 12px;
+              align-items: center;
+              width: 90%;
+              height: 8%;
+              color: black;
+              background-color: #9e95ff5f;
+              margin-top: 2%;
+              border-radius: 10px;
+              overflow: hidden;
+              cursor: pointer;
+            }
+
+            .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-field-name {
+              width: 25%;
+              height: 100%;
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+              overflow: hidden;
+            }
+            .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-ds-unique {
+              width: 30%;
+              height: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              overflow: hidden;
+            }
+
+            .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-activity-status {
+              width: 15%;
+              height: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              overflow: hidden;
+              pointer-events: none;
+
+              .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity {
+                width: 32%;
+                height: 60%;
+                background-color: rgba(113, 122, 134, 0.137);
+                border-radius: 100%;
+                padding: 8%;
+              }
+            }
+
+            .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action {
+              width: 30%;
+              height: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-dropdown {
+                padding: 6px 20px;
+                outline: none;
+                text-align: left;
+                border-radius: 10px;
+                cursor: pointer;
+              }
+            }
+          }
+
+          .data-controller-profile-data-subjects-alert-div-bottom-outer {
+            width: 100%;
+            height: 10%;
+            background-color: #83888b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .data-controller-profile-data-subjects-alert-div-bottom-outer-form {
+              width: 100%;
+              height: 100%;
+              display: flex;
+              justify-content: space-around;
+              align-items: center;
+
+              .data-controller-profile-data-subjects-alert-div-bottom-outer-form-btn {
+                width: 40%;
+                height: 40%;
+                border-radius: 5px;
+                border: none;
+                background-color: rgb(40, 65, 88);
+                color: white;
+                cursor: pointer;
+              }
+
+              .data-controller-profile-data-subjects-alert-div-bottom-outer-form-btn:hover {
                 background-color: rgb(30, 50, 70);
               }
             }

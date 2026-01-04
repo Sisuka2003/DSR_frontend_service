@@ -21,6 +21,15 @@ class DataControllerOperations {
     });
   }
 
+  requestAssociatedDataSubjectsWithOrganization(payload) {
+    console.log("Request Associate Data Subject data from data controller Payload:", payload);
+    return axios.post(`${API_BASE_URL}/requestAssociatedDataSubjectsWithOrganization`, payload, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+
   deleteDataControllerData(payload) {
     console.log("Delete data controller data payload:", payload);
     return axios.delete(`${API_BASE_URL}/deleteDataControllerData`, {

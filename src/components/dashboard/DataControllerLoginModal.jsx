@@ -1,6 +1,10 @@
 import React from "react";
 import LoginService from "../../services/LoginService";
 import DataControllerOperations from "../../services/DataControllerOperations";
+import pendingIcon from "../../pending.png";
+import approvedIcon from "../../approved.png";
+import rejectedIcon from "../../rejected.png";
+import queuedIcon from "../../queued.png";
 
 class DataControllerLoginModal extends React.Component {
   constructor() {
@@ -16,6 +20,9 @@ class DataControllerLoginModal extends React.Component {
       deleteConfirmed: false,
       editableData: {},
       internalControllerData: null,
+      notificationCount: 3,
+      checkAlerts: false,
+      associatedData: null,
     };
   }
 
@@ -29,7 +36,7 @@ class DataControllerLoginModal extends React.Component {
 
     LoginService.LoginDataController(payload)
       .then((response) => {
-        console.log("Login success:", response.data);
+        console.log("Login success 01:", response.data.data);
 
         this.setState({
           isControllerLoginSuccess: true,
@@ -192,6 +199,118 @@ class DataControllerLoginModal extends React.Component {
     });
   };
 
+  handleOnAlertClicked = (event) => {
+    event.preventDefault();
+    const payload = {
+      dcCode: this.state.controllerData?.id,
+    };
+
+    DataControllerOperations.requestAssociatedDataSubjectsWithOrganization(
+      payload
+    )
+      .then((response) => {
+        console.log("Associated Data Fetched :", response?.data);
+
+        this.setState({
+          checkAlerts: !this.state.checkAlerts,
+          associatedData: response.data.data,
+        });
+      })
+      .catch((error) => {
+        console.error(
+          "Associated Data Fetched failed:",
+          error.response || error
+        );
+        alert(
+          error.response?.data?.message || "Fetching failed. Please try again."
+        );
+      });
+  };
+
+  fetchUniqueDataOfCustomer = (item) => {
+    switch (item.dcCode?.identificationKey?.code) {
+      case "NIC":
+        return item.dsCode?.nicNumber;
+
+      case "MOB":
+        return item.dsCode?.mobileNumber;
+
+      case "EMAIL":
+        return item.dsCode?.emailAddress;
+
+      case "CUSTID":
+        return item.dsCode?.customerId;
+
+      default:
+        return null;
+    }
+  };
+
+  fetchIconForActivityStatus = (item) => {
+    switch (item.activityStatus?.code) {
+      case "PEND":
+        return (
+          <img
+            className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity"
+            src={pendingIcon}
+            alt="Pending"
+          />
+        );
+
+      case "APPR":
+        return (
+          <img
+            className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity"
+            src={approvedIcon}
+            alt="Approved"
+          />
+        );
+
+      case "REJC":
+        return (
+          <img
+            className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity"
+            src={rejectedIcon}
+            alt="Rejected"
+          />
+        );
+
+      case "QUEU":
+        return (
+          <img
+            className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity"
+            src={queuedIcon}
+            alt="Queued"
+          />
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  fetchClassNameFromActivityStatus = (item) => {
+    switch (item.activityStatus?.code) {
+      case "PEND":
+        return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-pending";
+
+      case "APPR":
+        return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-approved";
+
+      case "REJC":
+        return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-rejected";
+
+      case "QUEU":
+        return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-queued";
+
+      default:
+        return null;
+    }
+  };
+
+  renderItemDataIntoThePopupComponent = (item) => {
+  }
+
   render() {
     const controllerDataToDisplay =
       this.state.internalControllerData || this.state.controllerData;
@@ -234,7 +353,24 @@ class DataControllerLoginModal extends React.Component {
             <div className="data-controller-profile-result-div-middle-1"></div>
             <div className="data-controller-profile-result-div-middle-2">
               <div className="data-controller-profile-result-div-middle-2-top">
-                <div className="data-controller-profile-result-div-middle-2-top-image"></div>
+                <div className="data-controller-profile-result-div-middle-2-top-image notification-wrapper">
+                  <span
+                    className="notification-bell"
+                    onClick={this.handleOnAlertClicked}
+                  >
+                    🔔
+                  </span>
+
+                  {100 > controllerDataToDisplay?.notifications && (
+                    <span className="notification-badge">
+                      {controllerDataToDisplay?.notifications}
+                    </span>
+                  )}
+
+                  {controllerDataToDisplay?.notifications > 100 && (
+                    <span className="notification-badge">100+</span>
+                  )}
+                </div>
                 <div className="data-controller-profile-result-div-middle-2-top-name">
                   Welcome
                   {controllerDataToDisplay
@@ -327,7 +463,11 @@ class DataControllerLoginModal extends React.Component {
 
             <div
               className={`data-controller-profile-overlay ${
-                this.state.isModify || this.state.isDelete ? "active" : ""
+                this.state.isModify ||
+                this.state.isDelete ||
+                this.state.checkAlerts
+                  ? "active"
+                  : ""
               }`}
             />
 
@@ -452,6 +592,70 @@ class DataControllerLoginModal extends React.Component {
                   />
                 </div>
               </form>
+            </div>
+
+            <div
+              className={`data-controller-profile-data-subjects-alert-div ${
+                this.state.checkAlerts ? "active" : ""
+              }`}
+            >
+              <div className="data-controller-profile-data-subjects-alert-div-top-outer">
+                <form className="data-controller-profile-data-subjects-alert-div-top-outer-form">
+                  <input
+                    type="text"
+                    placeholder="Search data subject by name"
+                    className="data-controller-profile-data-subjects-alert-div-top-outer-form-search-field"
+                  />
+                  <input
+                    type="submit"
+                    value="Search"
+                    className="data-controller-profile-data-subjects-alert-div-top-outer-form-search-btn"
+                  />
+
+                  <button
+                    type="button"
+                    className="data-controller-profile-data-subjects-alert-div-top-outer-form-cancel-btn"
+                    onClick={() => this.setState({ checkAlerts: false })}
+                  >
+                    cancel
+                  </button>
+                </form>
+              </div>
+
+              <div className="data-controller-profile-data-subjects-alert-div-middle-outer">
+                {this.state.associatedData &&
+                  this.state.associatedData.map((item) => (
+                    <div
+                      key={item.id}
+                      className={this.fetchClassNameFromActivityStatus(item)}
+                      onclick = {this.renderItemDataIntoThePopupComponent(item)}
+                    >
+                      <div className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-field-name">
+                        {item.dsCode?.firstName} {item.dsCode?.lastName}
+                      </div>
+
+                      <div className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-ds-unique">
+                        {this.fetchUniqueDataOfCustomer(item)}
+                      </div>
+
+                      <div className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-activity-status">
+                        {this.fetchIconForActivityStatus(item)}
+                      </div>
+
+                      <div className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action">
+                        <select
+                          defaultValue={item.activityStatus?.code}
+                          className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-dropdown"
+                        >
+                          <option value="PEND">Pending</option>
+                          <option value="APPR">Approved</option>
+                          <option value="REJC">Rejected</option>
+                          <option value="QUEU">Queued</option>
+                        </select>
+                      </div>
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
         )}
