@@ -532,14 +532,12 @@
           left: 0;
           width: 100%;
           height: 100vh;
-
           background-color: rgba(0, 0, 0, 0.5);
-
           opacity: 0;
           visibility: hidden;
           transition: opacity 0.4s ease;
-
-          z-index: 100; // below popup
+          z-index: 100; 
+          pointer-events: none;
         }
 
         .data-controller-profile-overlay.active {
@@ -547,6 +545,7 @@
           visibility: visible;
           backdrop-filter: blur(2px);
           -webkit-backdrop-filter: blur(2px);
+          pointer-events: auto;
         }
 
         .data-controller-profile-popup-div {

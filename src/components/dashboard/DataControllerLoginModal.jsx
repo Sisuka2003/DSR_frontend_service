@@ -5,6 +5,7 @@ import pendingIcon from "../../pending.png";
 import approvedIcon from "../../approved.png";
 import rejectedIcon from "../../rejected.png";
 import queuedIcon from "../../queued.png";
+import DataControllerCredentialSubjectView from "../dataController/DataControllerCredentialSubjectView";
 
 class DataControllerLoginModal extends React.Component {
   constructor() {
@@ -23,6 +24,9 @@ class DataControllerLoginModal extends React.Component {
       notificationCount: 3,
       checkAlerts: false,
       associatedData: null,
+      selectedSubject: null,
+      showSubjectPopup: false,
+      comparisonItem: null,
     };
   }
 
@@ -308,8 +312,56 @@ class DataControllerLoginModal extends React.Component {
     }
   };
 
-  renderItemDataIntoThePopupComponent = (item) => {
-  }
+  flattenObject = (obj, parentKey = "", result = {}) => {
+    Object.entries(obj).forEach(([key, value]) => {
+      const newKey = parentKey ? `${parentKey}.${key}` : key;
+
+      if (typeof value === "object" && value !== null) {
+        this.flattenObject(value, newKey, result);
+      } else {
+        result[newKey] = value;
+      }
+    });
+
+    return result;
+  };
+
+  handleSubjectCardClick = (item) => {
+    console.log("Subject card clicked:", item);
+    try {
+      const flatOld = this.flattenObject(JSON.parse(item.backupData || "{}"));
+      const flatNew = this.flattenObject(
+        JSON.parse(item.collectedData || "{}")
+      );
+
+      const allKeys = Array.from(
+        new Set([...Object.keys(flatOld), ...Object.keys(flatNew)])
+      );
+
+      const comparisonRows = allKeys.map((key) => {
+        const oldValue = flatOld[key] ?? "";
+        const newValue = flatNew[key] ?? "";
+        const isChanged = String(oldValue) !== String(newValue);
+
+        return {
+          key,
+          oldValue,
+          newValue,
+          isChanged,
+        };
+      });
+
+      this.setState({
+        comparisonItem: comparisonRows,
+        checkAlerts: false,
+        selectedSubject: item,
+        showSubjectPopup: true,
+      });
+    } catch (e) {
+      console.error("JSON parse error", e);
+      alert("Invalid data format");
+    }
+  };
 
   render() {
     const controllerDataToDisplay =
@@ -356,7 +408,10 @@ class DataControllerLoginModal extends React.Component {
                 <div className="data-controller-profile-result-div-middle-2-top-image notification-wrapper">
                   <span
                     className="notification-bell"
-                    onClick={this.handleOnAlertClicked}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      this.handleOnAlertClicked(e);
+                    }}
                   >
                     🔔
                   </span>
@@ -628,7 +683,10 @@ class DataControllerLoginModal extends React.Component {
                     <div
                       key={item.id}
                       className={this.fetchClassNameFromActivityStatus(item)}
-                      onclick = {this.renderItemDataIntoThePopupComponent(item)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        this.handleSubjectCardClick(item);
+                      }}
                     >
                       <div className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-field-name">
                         {item.dsCode?.firstName} {item.dsCode?.lastName}
@@ -657,6 +715,19 @@ class DataControllerLoginModal extends React.Component {
                   ))}
               </div>
             </div>
+            {this.state.showSubjectPopup && this.state.comparisonItem && (
+              <DataControllerCredentialSubjectView
+                comparisonItem={this.state.comparisonItem}
+                data={this.state.selectedSubject}
+                onClose={() =>
+                  this.setState({
+                    showSubjectPopup: false,
+                    selectedSubject: null,
+                    comparisonItem: null,
+                  })
+                }
+              />
+            )}
           </div>
         )}
       </>
