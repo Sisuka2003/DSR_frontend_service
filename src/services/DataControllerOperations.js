@@ -39,6 +39,15 @@ class DataControllerOperations {
       },
     });
   }
+
+  rejectDataSubjectDataModificationRequest(payload) {
+    console.log("Reject Data Subject Data Modification Request payload :", payload);
+    return axios.post(`${API_BASE_URL}/rejectDataSubjectDataModificationRequest`, payload, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
 }
 
 export default new DataControllerOperations();

@@ -1,5 +1,7 @@
 import React from "react";
 import "./DataControllerCredentialSubjectView.scss";
+import rejectDataSubjectDataModificationRequest from "../../services/DataControllerOperations";
+import modifyDataSubjectData from "../../services/DataSubjectOperations";
 
 class DataControllerCredentialSubjectView extends React.Component {
   constructor() {
@@ -17,9 +19,54 @@ class DataControllerCredentialSubjectView extends React.Component {
       .replace(/^./, (str) => str.toUpperCase());
   };
 
-  render() {
-    const { comparisonItem } = this.props;
+  rejectDataSubjectRequest = (event) => {
+    event.preventDefault();
+    const payload = {
+      dsCode: this.props.selectedSubject?.dsCode?.id,
+      dcCode: this.props.selectedSubject?.dcCode?.id,
+      status: this.props.selectedSubject?.status?.id,
+    };
 
+    rejectDataSubjectDataModificationRequest
+      .rejectDataSubjectDataModificationRequest(payload)
+      .then((response) => {
+        console.log("Rejection success:", response.data);
+        this.props.onClose();
+      })
+      .catch((error) => {
+        alert(
+          error.response?.data?.message ||
+            "Rejection Went Wrong. Please try again."
+        );
+      });
+  };
+
+  acceptDataSubjectRequest = (event) => {
+    event.preventDefault();
+    const payload = {
+      collectedData: this.props.selectedSubject?.collectedData,
+      dsCode: this.props.selectedSubject?.dsCode?.id,
+      dcCode: this.props.selectedSubject?.dcCode?.id,
+      IsControllerApproved: true,
+      status: this.props.selectedSubject?.status?.id,
+    };
+
+    modifyDataSubjectData
+      .modifyDataSubjectData(payload)
+      .then((response) => {
+        console.log("Modification success:", response.data);
+        this.props.onClose();
+      })
+      .catch((error) => {
+        alert(
+          error.response?.data?.message ||
+            "Modification Went Wrong. Please try again."
+        );
+      });
+  };
+
+  render() {
+    const { comparisonItem, selectedSubject } = this.props;
     if (!Array.isArray(comparisonItem)) return null;
     return (
       <div className="data-controller-credential-subject-view-outer">
@@ -72,8 +119,13 @@ class DataControllerCredentialSubjectView extends React.Component {
             </div>
           </div>
           <div className="data-controller-credential-subject-view-outer-popup-footer">
-            <button type="button">Accept</button>
-            <button type="button">Reject</button>
+            <button type="button" onClick={this.acceptDataSubjectRequest}>Accept</button>
+            <button
+              type="button"
+              onClick={this.rejectDataSubjectRequest}
+            >
+              Reject
+            </button>
           </div>
         </div>
       </div>

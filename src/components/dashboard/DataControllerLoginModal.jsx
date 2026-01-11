@@ -329,6 +329,13 @@ class DataControllerLoginModal extends React.Component {
   handleSubjectCardClick = (item) => {
     console.log("Subject card clicked:", item);
     try {
+      if (item.activityStatus?.code === "APPR") {
+        return alert("Already Approved");
+      }
+      if (item.activityStatus?.code === "REJC") {
+        return alert("Already Rejected");
+      }
+
       const flatOld = this.flattenObject(JSON.parse(item.backupData || "{}"));
       const flatNew = this.flattenObject(
         JSON.parse(item.collectedData || "{}")
@@ -718,6 +725,7 @@ class DataControllerLoginModal extends React.Component {
             {this.state.showSubjectPopup && this.state.comparisonItem && (
               <DataControllerCredentialSubjectView
                 comparisonItem={this.state.comparisonItem}
+                selectedSubject={this.state.selectedSubject}
                 data={this.state.selectedSubject}
                 onClose={() =>
                   this.setState({
