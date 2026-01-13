@@ -11,6 +11,9 @@ class DashboardCredentials extends React.Component {
       selectedOrgId: "",
       identificationCode: "",
       placeHolderText: "Please select an organization first",
+      otpInput: "",
+      otpVerficationStage: false,
+      loginSubjectData: null,
     };
   }
 
@@ -68,9 +71,31 @@ class DashboardCredentials extends React.Component {
       .then((response) => {
         console.log("Login success:", response.data.data);
 
-        if (this.props.onLoginSuccess) {
-          this.props.onLoginSuccess(response.data.data);
-        }
+        this.setState({
+          loginSubjectData: response?.data?.data,
+        });
+        const otpCodeRequestPayload = {
+          recipientEmail: response.data?.data?.dsCode?.emailAddress,
+          dsCode: response.data?.data?.dsCode?.id,
+        };
+
+        CommonService.otpCodeRequest(otpCodeRequestPayload)
+          .then((response) => {
+            console.log(
+              "OTP Generation Request Payload success:",
+              response.data.data
+            );
+            this.setState({
+              otpVerficationStage: true,
+            });
+          })
+          .catch((error) => {
+            console.error("OTP Generation failed:", error.response || error);
+            alert(
+              error.response?.data?.message ||
+                "OTP Generation failed. Please try again."
+            );
+          });
       })
       .catch((error) => {
         console.error("Login failed:", error.response || error);
@@ -80,39 +105,119 @@ class DashboardCredentials extends React.Component {
       });
   };
 
+  handleOtpVerification = (event) => {
+    event.preventDefault();
+    const payload = {
+      otpCode: this.state.otpInput,
+      dsCode: this.state.loginSubjectData?.dsCode?.id,
+    };
+
+    CommonService.otpCodeVerification(payload)
+      .then((response) => {
+        console.log(
+          "OTP Verification Request Payload success:",
+          response.data.data
+        );
+        this.setState({
+          otpVerficationStage: false,
+        });
+
+
+        if (this.props.onLoginSuccess) {
+          this.props.onLoginSuccess(this.state.loginSubjectData);
+        }
+      })
+      .catch((error) => {
+        console.error("OTP Verification failed:", error.response || error);
+        alert(
+          error.response?.data?.message ||
+            "OTP Verification failed. Please try again."
+        );
+      });
+  };
+
   render() {
     return (
-      <div className="dashboard-div-bottom">
-        <form
-          className="dashboard-div-bottom-credentials-form"
-          onSubmit={this.handleSubmit}
-        >
-          <select
-            className="dashboard-div-bottom-credentials-form-select"
-            onChange={this.handleOrgChange}
-            required
+      <>
+        <div className="dashboard-div-bottom">
+          <form
+            className="dashboard-div-bottom-credentials-form"
+            onSubmit={this.handleSubmit}
           >
-            <option>Please Select Your Organization</option>
-            {this.state.activeOrgs.map((org) => (
-              <option key={org.identificationKey.code} value={org.id}>
-                {org.orgName}
-              </option>
-            ))}
-          </select>
-          <input
-            ref={this.inputRef}
-            className="dashboard-div-bottom-credentials-form-input"
-            type="text"
-            placeholder={this.state.placeHolderText}
-            required
-          />
-          <input
-            className="dashboard-div-bottom-credentials-form-submit"
-            type="submit"
-            value="Login"
-          />
-        </form>
-      </div>
+            <select
+              className="dashboard-div-bottom-credentials-form-select"
+              onChange={this.handleOrgChange}
+              required
+            >
+              <option>Please Select Your Organization</option>
+              {this.state.activeOrgs.map((org) => (
+                <option key={org.identificationKey.code} value={org.id}>
+                  {org.orgName}
+                </option>
+              ))}
+            </select>
+            <input
+              ref={this.inputRef}
+              className="dashboard-div-bottom-credentials-form-input"
+              type="text"
+              placeholder={this.state.placeHolderText}
+              required
+            />
+            <input
+              className="dashboard-div-bottom-credentials-form-submit"
+              type="submit"
+              value="Login"
+            />
+          </form>
+        </div>
+
+        {this.state.otpVerficationStage && (
+          <div
+            className="dashboard-div-popup-overlay"
+            onClick={this.closePopup}
+          >
+            <div className="dashboard-div-otp-verification-popup">
+              <div className="dashboard-div-otp-verification-popup-top">
+                <h1>OTP Verification</h1>
+              </div>
+              <div className="dashboard-div-otp-verification-popup-middle">
+                <p className="dashboard-div-otp-verification-popup-middle-otp-paragraph">
+                  Dear Customer, Please enter the OTP (One-Time Password) which
+                  had been shared with your registered email address in the
+                  below to complete you verification procedure.
+                </p>
+                <br />
+                <span className="dashboard-div-otp-verification-popup-middle-otp-title">
+                  DSR-&nbsp;
+                  <input
+                    className="dashboard-div-otp-verification-popup-middle-otp-field"
+                    type="text"
+                    placeholder="Enter Your OTP Code Here"
+                    onChange={(e) =>
+                      this.setState({ otpInput: e.target.value })
+                    }
+                  />
+                </span>
+              </div>
+              <div className="dashboard-div-otp-verification-popup-bottom">
+                <button
+                  type="button"
+                  className="dashboard-div-otp-verification-popup-bottom-btn"
+                  onClick={this.handleOtpVerification}
+                >
+                  Verify
+                </button>
+                <button
+                  type="button"
+                  className="dashboard-div-otp-verification-popup-bottom-btn"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
     );
   }
 }
