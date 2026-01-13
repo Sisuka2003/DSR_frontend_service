@@ -122,7 +122,6 @@ class DashboardCredentials extends React.Component {
           otpVerficationStage: false,
         });
 
-
         if (this.props.onLoginSuccess) {
           this.props.onLoginSuccess(this.state.loginSubjectData);
         }
