@@ -1,58 +1,82 @@
 import React from "react";
 import LoginService from "../../services/LoginService";
+import AgentOperations from "../../services/AgentOperations";
 import DataControllerOperations from "../../services/DataControllerOperations";
 import pendingIcon from "../../pending.png";
 import approvedIcon from "../../approved.png";
 import rejectedIcon from "../../rejected.png";
 import queuedIcon from "../../queued.png";
 import DataControllerCredentialSubjectView from "../dataController/DataControllerCredentialSubjectView";
+import DarkenOverlay from "./DarkenOverlay";
+import DataAgentLoginModal from "./DataAgentLoginModal";
 
 class DataControllerLoginModal extends React.Component {
   constructor() {
     super();
     this.usernameRef = React.createRef();
     this.passwordRef = React.createRef();
+    this.checkBoxRef = React.createRef();
     this.state = {
       selectedOption: 0,
-      isControllerLoginSuccess: false,
-      controllerData: null,
       isModify: false,
       isDelete: false,
       deleteConfirmed: false,
       editableData: {},
-      internalControllerData: null,
+      internalUserData: null,
       notificationCount: 3,
       checkAlerts: false,
       associatedData: null,
       selectedSubject: null,
       showSubjectPopup: false,
       comparisonItem: null,
+      isAdminLoginSuccess: false,
+      isAgentLoginSuccess: false,
+      userData: null,
     };
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
+    const orgAdminChecked = this.checkBoxRef.current.checked;
 
     const payload = {
       orgUsername: this.usernameRef.current.value,
       orgPassword: this.passwordRef.current.value,
     };
+    if (orgAdminChecked) {
+      LoginService.LoginDataController(payload)
+        .then((response) => {
+          console.log("Login success 01:", response.data.data);
 
-    LoginService.LoginDataController(payload)
-      .then((response) => {
-        console.log("Login success 01:", response.data.data);
-
-        this.setState({
-          isControllerLoginSuccess: true,
-          controllerData: response.data.data,
+          this.setState({
+            isAdminLoginSuccess: true,
+            userData: response.data.data,
+          });
+        })
+        .catch((error) => {
+          console.error("Login failed:", error.response || error);
+          alert(
+            error.response?.data?.message || "Login failed. Please try again.",
+          );
         });
-      })
-      .catch((error) => {
-        console.error("Login failed:", error.response || error);
-        alert(
-          error.response?.data?.message || "Login failed. Please try again."
-        );
-      });
+    } else {
+      AgentOperations.LoginAgentDataController(payload)
+        .then((response) => {
+          console.log("Login Agent success 01:", response.data.data);
+
+          this.setState({
+            isAgentLoginSuccess: true,
+            userData: response.data.data,
+          });
+        })
+        .catch((error) => {
+          console.error("Login Agent failed:", error.response || error);
+          alert(
+            error.response?.data?.message ||
+              "Login Agent failed. Please try again.",
+          );
+        });
+    }
   };
   formatKeyLabel = (key) => {
     return key
@@ -71,8 +95,7 @@ class DataControllerLoginModal extends React.Component {
 
   handleProceedSubmit = (event) => {
     event.preventDefault();
-    console.log("ioncec");
-    const { selectedOption, controllerData } = this.state;
+    const { selectedOption, userData } = this.state;
 
     if (selectedOption === 1) {
       this.setState({ isModify: true, isDelete: false });
@@ -84,7 +107,7 @@ class DataControllerLoginModal extends React.Component {
 
     const editableData = {};
 
-    Object.entries(controllerData).forEach(([key, value]) => {
+    Object.entries(userData).forEach(([key, value]) => {
       if (typeof value === "object" && value !== null) {
         // nested object (orgStatus, identificationKey)
         Object.entries(value).forEach(([subKey, subValue]) => {
@@ -128,14 +151,14 @@ class DataControllerLoginModal extends React.Component {
             if (updatedControllerData) {
               this.setState({
                 editableData: {},
-                internalControllerData: updatedControllerData,
+                internalUserData: updatedControllerData,
               });
             }
           })
           .catch((error) => {
             alert(
               error.response?.data?.message ||
-                "Data Fetching Went Wrong. Please try again."
+                "Data Fetching Went Wrong. Please try again.",
             );
           });
       })
@@ -143,7 +166,7 @@ class DataControllerLoginModal extends React.Component {
         console.error("Modification failed:", error.response || error);
         alert(
           error.response?.data?.message ||
-            "Modification failed. Please try again."
+            "Modification failed. Please try again.",
         );
       });
 
@@ -169,7 +192,7 @@ class DataControllerLoginModal extends React.Component {
     console.log("Deleting data...");
 
     const payload = {
-      dcCode: this.state.controllerData?.id,
+      dcCode: this.state.userData?.id,
       status: "2",
     };
 
@@ -179,19 +202,19 @@ class DataControllerLoginModal extends React.Component {
         console.log("Deletion success:", response.data);
         this.setState({
           selectedOption: 0,
-          isControllerLoginSuccess: false,
-          controllerData: null,
+          isAdminLoginSuccess: false,
+          userData: null,
           isModify: false,
           isDelete: false,
           deleteConfirmed: false,
           editableData: {},
-          internalControllerData: null,
+          internalUserData: null,
         });
       })
       .catch((error) => {
         console.error("Deletion failed:", error.response || error);
         alert(
-          error.response?.data?.message || "Deletion failed. Please try again."
+          error.response?.data?.message || "Deletion failed. Please try again.",
         );
       });
 
@@ -206,11 +229,11 @@ class DataControllerLoginModal extends React.Component {
   handleOnAlertClicked = (event) => {
     event.preventDefault();
     const payload = {
-      dcCode: this.state.controllerData?.id,
+      dcCode: this.state.userData?.id,
     };
 
     DataControllerOperations.requestAssociatedDataSubjectsWithOrganization(
-      payload
+      payload,
     )
       .then((response) => {
         console.log("Associated Data Fetched :", response?.data);
@@ -223,10 +246,10 @@ class DataControllerLoginModal extends React.Component {
       .catch((error) => {
         console.error(
           "Associated Data Fetched failed:",
-          error.response || error
+          error.response || error,
         );
         alert(
-          error.response?.data?.message || "Fetching failed. Please try again."
+          error.response?.data?.message || "Fetching failed. Please try again.",
         );
       });
   };
@@ -250,65 +273,136 @@ class DataControllerLoginModal extends React.Component {
     }
   };
 
-  fetchIconForActivityStatus = (item) => {
-    switch (item.activityStatus?.code) {
-      case "PEND":
-        return (
-          <img
-            className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity"
-            src={pendingIcon}
-            alt="Pending"
-          />
-        );
+  fetchIconForActivityStatus = (item, isAdminLoginSuccess) => {
+    if (isAdminLoginSuccess) {
+      switch (item.adminActivityStatus?.code) {
+        case "PEND":
+          return (
+            <img
+              className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity"
+              src={pendingIcon}
+              alt="Pending"
+            />
+          );
 
-      case "APPR":
-        return (
-          <img
-            className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity"
-            src={approvedIcon}
-            alt="Approved"
-          />
-        );
+        case "APPR":
+          return (
+            <img
+              className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity"
+              src={approvedIcon}
+              alt="Approved"
+            />
+          );
 
-      case "REJC":
-        return (
-          <img
-            className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity"
-            src={rejectedIcon}
-            alt="Rejected"
-          />
-        );
+        case "REJC":
+          return (
+            <img
+              className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity"
+              src={rejectedIcon}
+              alt="Rejected"
+            />
+          );
 
-      case "QUEU":
-        return (
-          <img
-            className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity"
-            src={queuedIcon}
-            alt="Queued"
-          />
-        );
+        case "QUEU":
+          return (
+            <img
+              className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity"
+              src={queuedIcon}
+              alt="Queued"
+            />
+          );
+        default:
+          return null;
+      }
+    } else {
+      switch (item.activityStatus?.code) {
+        case "PEND":
+          return (
+            <img
+              className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity"
+              src={pendingIcon}
+              alt="Pending"
+            />
+          );
 
-      default:
-        return null;
+        case "APPR":
+          return (
+            <img
+              className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity"
+              src={approvedIcon}
+              alt="Approved"
+            />
+          );
+
+        case "REJC":
+          return (
+            <img
+              className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity"
+              src={rejectedIcon}
+              alt="Rejected"
+            />
+          );
+
+        case "QUEU":
+          return (
+            <img
+              className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity"
+              src={queuedIcon}
+              alt="Queued"
+            />
+          );
+
+        case "SKIP":
+          return (
+            <img
+              className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity"
+              src={queuedIcon}
+              alt="Skipped"
+            />
+          );
+        default:
+          return null;
+      }
     }
   };
 
-  fetchClassNameFromActivityStatus = (item) => {
-    switch (item.activityStatus?.code) {
-      case "PEND":
-        return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-pending";
+  fetchClassNameFromActivityStatus = (item, isAdminLoginSuccess) => {
+    if (isAdminLoginSuccess) {
+      switch (item.adminActivityStatus?.code) {
+        case "PEND":
+          return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-pending";
 
-      case "APPR":
-        return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-approved";
+        case "APPR":
+          return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-approved";
 
-      case "REJC":
-        return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-rejected";
+        case "REJC":
+          return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-rejected";
 
-      case "QUEU":
-        return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-queued";
+        case "QUEU":
+          return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-queued";
 
-      default:
-        return null;
+        default:
+          return null;
+      }
+    } else {
+      switch (item.activityStatus?.code) {
+        case "PEND":
+          return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-pending";
+
+        case "APPR":
+          return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-approved";
+
+        case "REJC":
+          return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-rejected";
+
+        case "QUEU":
+          return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-queued";
+
+        case "SKIP":
+          return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-skipped";
+        default:
+          return null;
+      }
     }
   };
 
@@ -326,23 +420,31 @@ class DataControllerLoginModal extends React.Component {
     return result;
   };
 
-  handleSubjectCardClick = (item) => {
+  handleSubjectCardClick = (item, isAdminLoginSuccess) => {
     console.log("Subject card clicked:", item);
     try {
-      if (item.activityStatus?.code === "APPR") {
-        return alert("Already Approved");
+      if (isAdminLoginSuccess) {
+        if (item.adminActivityStatus?.code === "APPR") {
+          return alert("Already Approved");
+        }
+        if (item.adminActivityStatus?.code === "REJC") {
+          return alert("Already Rejected");
+        }
+      } else {
+        if (item.activityStatus?.code === "QUEUED") {
+          return alert("Queued By Agent");
+        }
+        if (item.activityStatus?.code === "REJC") {
+          return alert("Rejected By Agent");
+        }
       }
-      if (item.activityStatus?.code === "REJC") {
-        return alert("Already Rejected");
-      }
-
       const flatOld = this.flattenObject(JSON.parse(item.backupData || "{}"));
       const flatNew = this.flattenObject(
-        JSON.parse(item.collectedData || "{}")
+        JSON.parse(item.collectedData || "{}"),
       );
 
       const allKeys = Array.from(
-        new Set([...Object.keys(flatOld), ...Object.keys(flatNew)])
+        new Set([...Object.keys(flatOld), ...Object.keys(flatNew)]),
       );
 
       const comparisonRows = allKeys.map((key) => {
@@ -371,13 +473,14 @@ class DataControllerLoginModal extends React.Component {
   };
 
   render() {
-    const controllerDataToDisplay =
-      this.state.internalControllerData || this.state.controllerData;
+    const adminDataToDisplay =
+      this.state.internalUserData || this.state.userData;
+
     return (
       <>
         <form
           className={`dashboard-div-popup-container ${
-            this.state.isControllerLoginSuccess ? "deactive" : ""
+            this.state.isAdminLoginSuccess ? "deactive" : ""
           }`}
           onClick={(e) => e.stopPropagation()}
           onSubmit={this.handleSubmit}
@@ -397,6 +500,10 @@ class DataControllerLoginModal extends React.Component {
             placeholder="Please Enter Your Password"
             required
           />
+          <label>
+            <input type="checkbox" ref={this.checkBoxRef} />
+            &nbsp; Yes, I am a Data Controller Admin
+          </label>
           <input
             className="dashboard-div-popup-container-credentials-form-submit"
             type="submit"
@@ -404,7 +511,7 @@ class DataControllerLoginModal extends React.Component {
           />
         </form>
 
-        {this.state.isControllerLoginSuccess && (
+        {this.state.isAdminLoginSuccess && (
           <div
             className="data-controller-profile-result-div-middle"
             onClick={(e) => e.stopPropagation()}
@@ -423,21 +530,19 @@ class DataControllerLoginModal extends React.Component {
                     🔔
                   </span>
 
-                  {100 > controllerDataToDisplay?.notifications && (
+                  {100 > adminDataToDisplay?.notifications && (
                     <span className="notification-badge">
-                      {controllerDataToDisplay?.notifications}
+                      {adminDataToDisplay?.notifications}
                     </span>
                   )}
 
-                  {controllerDataToDisplay?.notifications > 100 && (
+                  {adminDataToDisplay?.notifications > 100 && (
                     <span className="notification-badge">100+</span>
                   )}
                 </div>
                 <div className="data-controller-profile-result-div-middle-2-top-name">
                   Welcome
-                  {controllerDataToDisplay
-                    ? `, ${controllerDataToDisplay?.orgName}`
-                    : ""}
+                  {adminDataToDisplay ? `, ${adminDataToDisplay?.orgName}` : ""}
                 </div>
               </div>
               <div className="data-controller-profile-result-div-middle-2-middle">
@@ -460,14 +565,11 @@ class DataControllerLoginModal extends React.Component {
             <div className="data-controller-profile-result-div-middle-4">
               <div className="data-controller-profile-result-div-middle-4-top">
                 <h1>Organizational Information</h1>
-                {controllerDataToDisplay &&
+                {adminDataToDisplay &&
                   (() => {
-                    const parsedData = controllerDataToDisplay;
-
-                    const rows = Object.entries(controllerDataToDisplay)
+                    const rows = Object.entries(adminDataToDisplay)
                       .filter(
-                        ([key]) =>
-                          typeof controllerDataToDisplay[key] !== "object"
+                        ([key]) => typeof adminDataToDisplay[key] !== "object",
                       ) // simple fields
                       .map(([key, value]) => ({ key, value }));
 
@@ -523,14 +625,10 @@ class DataControllerLoginModal extends React.Component {
             </div>
             <div className="data-controller-profile-result-div-middle-5"></div>
 
-            <div
-              className={`data-controller-profile-overlay ${
-                this.state.isModify ||
-                this.state.isDelete ||
-                this.state.checkAlerts
-                  ? "active"
-                  : ""
-              }`}
+            <DarkenOverlay
+              isDelete={this.state.isDelete}
+              isModify={this.state.isModify}
+              checkAlerts={this.state.checkAlerts}
             />
 
             <div
@@ -538,14 +636,11 @@ class DataControllerLoginModal extends React.Component {
                 this.state.isModify ? "active" : ""
               }`}
             >
-              {controllerDataToDisplay &&
+              {adminDataToDisplay &&
                 (() => {
-                  const parsedData = controllerDataToDisplay;
-
-                  const rows = Object.entries(controllerDataToDisplay)
+                  const rows = Object.entries(adminDataToDisplay)
                     .filter(
-                      ([key]) =>
-                        typeof controllerDataToDisplay[key] !== "object"
+                      ([key]) => typeof adminDataToDisplay[key] !== "object",
                     ) // simple fields
                     .map(([key, value]) => ({ key, value }));
                   return (
@@ -574,7 +669,7 @@ class DataControllerLoginModal extends React.Component {
                                     onChange={(e) =>
                                       this.handleFieldChange(
                                         `${key}`,
-                                        e.target.value
+                                        e.target.value,
                                       )
                                     }
                                   />
@@ -619,11 +714,11 @@ class DataControllerLoginModal extends React.Component {
               >
                 <h1>Confirmation Form</h1>
                 <p>
-                  Dear Controller, Are you sure to delete your information from{" "}
-                  {controllerDataToDisplay?.lastUpdatedTime}? Please note that
-                  this approach is not reversible at any costs. Therefore, make
-                  sure to proceed at you own risk. And check the below box to
-                  accept the risk and continue on data erasing procedure.
+                  Dear Admin, Are you sure to delete your information from{" "}
+                  {adminDataToDisplay?.lastUpdatedTime}? Please note that this
+                  approach is not reversible at any costs. Therefore, make sure
+                  to proceed at you own risk. And check the below box to accept
+                  the risk and continue on data erasing procedure.
                 </p>
                 <div className="data-controller-profile-delete-popup-active-form-div-checkbox">
                   <input
@@ -689,10 +784,16 @@ class DataControllerLoginModal extends React.Component {
                   this.state.associatedData.map((item) => (
                     <div
                       key={item.id}
-                      className={this.fetchClassNameFromActivityStatus(item)}
+                      className={this.fetchClassNameFromActivityStatus(
+                        item,
+                        this.state.isAdminLoginSuccess,
+                      )}
                       onClick={(e) => {
                         e.stopPropagation();
-                        this.handleSubjectCardClick(item);
+                        this.handleSubjectCardClick(
+                          item,
+                          this.state.isAdminLoginSuccess,
+                        );
                       }}
                     >
                       <div className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-field-name">
@@ -704,7 +805,10 @@ class DataControllerLoginModal extends React.Component {
                       </div>
 
                       <div className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-activity-status">
-                        {this.fetchIconForActivityStatus(item)}
+                        {this.fetchIconForActivityStatus(
+                          item,
+                          this.state.isAdminLoginSuccess,
+                        )}
                       </div>
 
                       <div className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action">
@@ -716,6 +820,7 @@ class DataControllerLoginModal extends React.Component {
                           <option value="APPR">Approved</option>
                           <option value="REJC">Rejected</option>
                           <option value="QUEU">Queued</option>
+                          <option value="SKIP">Skipped</option>
                         </select>
                       </div>
                     </div>
@@ -737,6 +842,10 @@ class DataControllerLoginModal extends React.Component {
               />
             )}
           </div>
+        )}
+
+        {this.state.isAgentLoginSuccess && (
+          <DataAgentLoginModal userData={this.state.userData} />
         )}
       </>
     );

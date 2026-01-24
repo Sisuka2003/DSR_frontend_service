@@ -2,6 +2,7 @@ import React from "react";
 import "./DataControllerCredentialSubjectView.scss";
 import rejectDataSubjectDataModificationRequest from "../../services/DataControllerOperations";
 import modifyDataSubjectData from "../../services/DataSubjectOperations";
+import AdminOperations from "../../services/AgentOperations";
 
 class DataControllerCredentialSubjectView extends React.Component {
   constructor() {
@@ -45,9 +46,8 @@ class DataControllerCredentialSubjectView extends React.Component {
     event.preventDefault();
     const payload = {
       collectedData: this.props.selectedSubject?.collectedData,
-      dsCode: this.props.selectedSubject?.dsCode?.id,
-      dcCode: this.props.selectedSubject?.dcCode?.id,
-      IsControllerApproved: true,
+      recordId: this.props.selectedSubject?.id,
+      isAnAdmin: true,
       status: this.props.selectedSubject?.status?.id,
     };
 

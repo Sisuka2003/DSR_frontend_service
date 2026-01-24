@@ -931,6 +931,21 @@
               cursor: pointer;
             }
 
+            .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-skipped {
+              display: flex;
+              justify-content: center;
+              padding: 12px;
+              align-items: center;
+              width: 90%;
+              height: 8%;
+              color: black;
+              background-color: #f3f57fce;
+              margin-top: 2%;
+              border-radius: 10px;
+              overflow: hidden;
+              cursor: pointer;
+            }
+
             .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-queued {
               display: flex;
               justify-content: center;
@@ -1142,6 +1157,21 @@
               height: 8%;
               color: black;
               background-color: #b3daff5b;
+              margin-top: 2%;
+              border-radius: 10px;
+              overflow: hidden;
+              cursor: pointer;
+            }
+            
+            .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-skipped {
+              display: flex;
+              justify-content: center;
+              padding: 12px;
+              align-items: center;
+              width: 90%;
+              height: 8%;
+              color: black;
+              background-color: #f3f57fce;
               margin-top: 2%;
               border-radius: 10px;
               overflow: hidden;
