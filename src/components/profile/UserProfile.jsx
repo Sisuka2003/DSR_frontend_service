@@ -19,16 +19,15 @@ class UserProfile extends React.Component {
     };
   }
   componentDidMount() {
-    const dsCode = this.props.customerData?.dsCode?.id;
-    this.fetchDataFromDsCode(dsCode);
+    this.fetchDataFromDsCode(this.props.customerData);
   }
 
   componentDidUpdate(prevProps) {
-    const prevId = prevProps.customerData?.dsCode?.id;
-    const currentId = this.props.customerData?.dsCode?.id;
+    const prevId = prevProps.customerData;
+    const currentId = this.props.customerData;
 
     if (prevId !== currentId && currentId) {
-      this.fetchDataFromDsCode(currentId);
+      this.fetchDataFromDsCode(this.props.customerData);
     }
   }
   formatKeyLabel = (key) => {
@@ -120,7 +119,7 @@ class UserProfile extends React.Component {
           })
           .catch((error) => {
             alert(
-              error.response?.data?.message ||
+              error.response?.data?.responseMessage ||
                 "Data Fetching Went Wrong. Please try again.",
             );
           });
@@ -128,7 +127,7 @@ class UserProfile extends React.Component {
       .catch((error) => {
         console.error("Modification failed:", error.response || error);
         alert(
-          error.response?.data?.message ||
+          error.response?.data?.responseMessage ||
             "Modification failed. Please try again.",
         );
       });
@@ -187,7 +186,7 @@ class UserProfile extends React.Component {
       .catch((error) => {
         console.error("Deletion failed:", error.response || error);
         alert(
-          error.response?.data?.message || "Deletion failed. Please try again.",
+          error.response?.data?.responseMessage || "Deletion failed. Please try again.",
         );
       });
 
@@ -224,16 +223,16 @@ class UserProfile extends React.Component {
       .catch((error) => {
         console.error("Report Generation failed:", error.response || error);
         alert(
-          error.response?.data?.message ||
+          error.response?.data?.responseMessage ||
             "Report Generation failed. Please try again.",
         );
       });
   };
 
-  fetchDataFromDsCode = (dsCode) => {
-    if (!dsCode) return;
+  fetchDataFromDsCode = (customerData) => {
+    if (!customerData?.dsCode) return;
 
-    const payload = { dsCode };
+    const payload = { dsCode: customerData?.dsCode?.id, dcCode: customerData?.dcCode?.id };
 
     DataSubjectOperations.requestDataSubjectRelatedDataFromOrganization(payload)
       .then((response) => {
@@ -274,16 +273,14 @@ class UserProfile extends React.Component {
           error.response || error,
         );
         alert(
-          error.response?.data?.message ||
+          error.response?.data?.responseMessage ||
             "Agent Fetching failed. Please try again.",
         );
       });
   };
 
   refreshUserData = () => {
-    const dsCode = this.props.customerData?.dsCode?.id;
-    if (!dsCode) return;
-    this.fetchDataFromDsCode(dsCode);
+    this.fetchDataFromDsCode(this.props.customerData);
   };
   render() {
     const customerDataToDisplay =

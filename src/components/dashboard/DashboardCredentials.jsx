@@ -93,7 +93,7 @@ class DashboardCredentials extends React.Component {
           .catch((error) => {
             console.error("OTP Generation failed:", error.response || error);
             alert(
-              error.response?.data?.message ||
+              error.response?.data?.responseMessage ||
                 "OTP Generation failed. Please try again."
             );
           });
@@ -101,7 +101,7 @@ class DashboardCredentials extends React.Component {
       .catch((error) => {
         console.error("Login failed:", error.response || error);
         alert(
-          error.response?.data?.message || "Login failed. Please try again."
+          error.response?.data?.responseMessage || "Login failed. Please try again."
         );
       });
   };
@@ -130,7 +130,7 @@ class DashboardCredentials extends React.Component {
       .catch((error) => {
         console.error("OTP Verification failed:", error.response || error);
         alert(
-          error.response?.data?.message ||
+          error.response?.data?.responseMessage ||
             "OTP Verification failed. Please try again."
         );
       });

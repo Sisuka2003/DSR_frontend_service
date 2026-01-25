@@ -48,7 +48,7 @@ class DataControllerCredentialSubjectView extends React.Component {
       })
       .catch((error) => {
         alert(
-          error.response?.data?.message ||
+          error.response?.data?.responseMessage ||
             "Rejection Went Wrong. Please try again."
         );
       });
@@ -74,7 +74,7 @@ class DataControllerCredentialSubjectView extends React.Component {
       })
       .catch((error) => {
         alert(
-          error.response?.data?.message ||
+          error.response?.data?.responseMessage ||
             "Modification Went Wrong. Please try again."
         );
       });
