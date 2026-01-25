@@ -1,6 +1,8 @@
 import React from "react";
 import "./UserProfile.scss";
 import DataSubjectOperations from "../../services/DataSubjectOperations";
+import DarkenOverlay from "../dashboard/DarkenOverlay";
+import CheckAlerts from "../checkAlerts/CheckAlerts";
 
 class UserProfile extends React.Component {
   constructor() {
@@ -12,9 +14,23 @@ class UserProfile extends React.Component {
       isDelete: false,
       editableData: {},
       deleteConfirmed: false,
+      notifications: [],
+      userData: [],
     };
   }
+  componentDidMount() {
+    const dsCode = this.props.customerData?.dsCode?.id;
+    this.fetchDataFromDsCode(dsCode);
+  }
 
+  componentDidUpdate(prevProps) {
+    const prevId = prevProps.customerData?.dsCode?.id;
+    const currentId = this.props.customerData?.dsCode?.id;
+
+    if (prevId !== currentId && currentId) {
+      this.fetchDataFromDsCode(currentId);
+    }
+  }
   formatKeyLabel = (key) => {
     return key
       .replace(/([a-z])([A-Z])/g, "$1 $2")
@@ -105,7 +121,7 @@ class UserProfile extends React.Component {
           .catch((error) => {
             alert(
               error.response?.data?.message ||
-                "Data Fetching Went Wrong. Please try again."
+                "Data Fetching Went Wrong. Please try again.",
             );
           });
       })
@@ -113,7 +129,7 @@ class UserProfile extends React.Component {
         console.error("Modification failed:", error.response || error);
         alert(
           error.response?.data?.message ||
-            "Modification failed. Please try again."
+            "Modification failed. Please try again.",
         );
       });
 
@@ -171,7 +187,7 @@ class UserProfile extends React.Component {
       .catch((error) => {
         console.error("Deletion failed:", error.response || error);
         alert(
-          error.response?.data?.message || "Deletion failed. Please try again."
+          error.response?.data?.message || "Deletion failed. Please try again.",
         );
       });
 
@@ -209,20 +225,100 @@ class UserProfile extends React.Component {
         console.error("Report Generation failed:", error.response || error);
         alert(
           error.response?.data?.message ||
-            "Report Generation failed. Please try again."
+            "Report Generation failed. Please try again.",
         );
       });
   };
 
+  fetchDataFromDsCode = (dsCode) => {
+    if (!dsCode) return;
+
+    const payload = { dsCode };
+
+    DataSubjectOperations.requestDataSubjectRelatedDataFromOrganization(payload)
+      .then((response) => {
+        const notificationList = response?.data?.data || [];
+
+        console.log("Notification fetch success:", notificationList);
+
+        this.setState({
+          userData: notificationList,
+          notifications: Array.isArray(notificationList)
+            ? notificationList.length
+            : 0,
+        });
+      })
+      .catch((error) => {
+        console.error("Notification fetch failed:", error);
+      });
+  };
+
+  handleOnAlertClicked = (dsCode, event) => {
+    event.preventDefault();
+    const payload = {
+      dsCode: dsCode,
+    };
+
+    DataSubjectOperations.requestDataSubjectRelatedDataFromOrganization(payload)
+      .then((response) => {
+        console.log("Agent Associated Data Fetched :", response?.data);
+
+        this.setState({
+          checkAlerts: !this.state.checkAlerts,
+          userData: response?.data?.data,
+        });
+      })
+      .catch((error) => {
+        console.error(
+          "Agent Associated Data Fetched failed:",
+          error.response || error,
+        );
+        alert(
+          error.response?.data?.message ||
+            "Agent Fetching failed. Please try again.",
+        );
+      });
+  };
+
+  refreshUserData = () => {
+    const dsCode = this.props.customerData?.dsCode?.id;
+    if (!dsCode) return;
+    this.fetchDataFromDsCode(dsCode);
+  };
   render() {
     const customerDataToDisplay =
       this.state.internalCustomerData || this.props.customerData;
+
+    const countNotifications = this.state.notifications;
     return (
       <div className="user-profile-result-div-middle">
         <div className="user-profile-result-div-middle-1"></div>
         <div className="user-profile-result-div-middle-2">
           <div className="user-profile-result-div-middle-2-top">
-            <div className="user-profile-result-div-middle-2-top-image"></div>
+            <div className="user-profile-result-div-middle-2-top-image">
+              <span
+                className="notification-bell-user"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  this.handleOnAlertClicked(
+                    customerDataToDisplay?.dsCode?.id,
+                    e,
+                  );
+                }}
+              >
+                🔔
+              </span>
+
+              {100 > countNotifications && (
+                <span className="notification-badge-user">
+                  {countNotifications}
+                </span>
+              )}
+
+              {countNotifications > 100 && (
+                <span className="notification-badge-user">100+</span>
+              )}
+            </div>
             <div
               className={
                 this.state.isModify
@@ -280,7 +376,7 @@ class UserProfile extends React.Component {
                       section,
                       key,
                       value,
-                    }))
+                    })),
                   );
 
                 return (
@@ -347,10 +443,12 @@ class UserProfile extends React.Component {
           </div>
         </div>
         <div className="user-profile-result-div-middle-5"></div>
-        <div
-          className={`user-profile-overlay ${
-            this.state.isModify || this.state.isDelete ? "active" : ""
-          }`}
+
+        <DarkenOverlay
+          isDelete={this.state.isDelete}
+          isModify={this.state.isModify}
+          checkAlerts={this.state.checkAlerts}
+          cssName="user-profile-overlay"
         />
         <div
           className={`user-profile-popup-div ${
@@ -374,7 +472,7 @@ class UserProfile extends React.Component {
                     section,
                     key,
                     value,
-                  }))
+                  })),
                 );
               return (
                 <>
@@ -404,7 +502,7 @@ class UserProfile extends React.Component {
                                 onChange={(e) =>
                                   this.handleFieldChange(
                                     `${section}.${key}`,
-                                    e.target.value
+                                    e.target.value,
                                   )
                                 }
                               />
@@ -484,6 +582,13 @@ class UserProfile extends React.Component {
             </div>
           </form>
         </div>
+
+        <CheckAlerts
+          checkAlerts={this.state.checkAlerts}
+          userData={this.state.userData}
+          setCheckAlerts={(value) => this.setState({ checkAlerts: value })}
+          refreshUserData={this.refreshUserData}
+        />
       </div>
     );
   }

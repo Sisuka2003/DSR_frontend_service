@@ -28,7 +28,8 @@
     background: rgb(255, 255, 255);
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 10px 100px rgb(40, 65, 88),
+    box-shadow:
+      0 10px 100px rgb(40, 65, 88),
       inset 0 0 0 1px rgba(255, 255, 255, 0);
 
     .user-profile-result-div-middle-2-top {
@@ -41,6 +42,7 @@
       text-align: center;
 
       .user-profile-result-div-middle-2-top-image {
+        position: relative;
         width: 43%;
         height: 55%;
         border-radius: 100%;
@@ -49,6 +51,43 @@
         background-repeat: no-repeat;
         background-position: center;
         background-size: contain;
+
+        .notification-bell-user {
+          font-size: 200%;
+          cursor: pointer;
+          position: absolute;
+          bottom: 70%;
+          right: 5%;
+          background-color: #283248;
+          border-radius: 100%;
+          padding-top: 2%;
+          padding-left: 2%;
+          padding-right: 2%;
+          padding-bottom: 3%;
+        }
+
+        .notification-bell-user:hover {
+          background-color: #3e4f71;
+          transition: 0.3s;
+        }
+
+        .notification-badge-user {
+          position: absolute;
+          top: 5%;
+          right: 2%;
+          background: #86a0d8;
+          color: white;
+          font-size: 100%;
+          font-weight: bold;
+          border-radius: 50%;
+          min-width: 18px;
+          height: 18px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 4px 4px;
+          box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+        }
       }
 
       .user-profile-result-div-middle-2-top-name {
@@ -142,7 +181,8 @@
     height: 80%;
     background: rgb(255, 255, 255);
     border-radius: 15px;
-    box-shadow: 50px 5px 100px rgba(40, 65, 88, 0.664),
+    box-shadow:
+      50px 5px 100px rgba(40, 65, 88, 0.664),
       inset 0 0 0 1px rgba(255, 255, 255, 0);
     display: flex;
     justify-content: center;
@@ -494,7 +534,7 @@
         text-align: center;
         justify-content: center;
         align-items: center;
-        .user-profile-delete-popup-active-form-div-checkbox-1{
+        .user-profile-delete-popup-active-form-div-checkbox-1 {
           width: 3%;
           height: 100%;
         }
@@ -510,7 +550,6 @@
         justify-content: space-around;
         align-items: center;
 
-        
         .user-profile-delete-popup-active-form-div-buttons-btn {
           width: 40%;
           height: 100%;

@@ -1,7 +1,7 @@
 import React from "react";
 import CommonService from "../../services/CommonService";
 import LoginService from "../../services/LoginService";
-
+import DarkenOverlay from "./DarkenOverlay";
 class DashboardCredentials extends React.Component {
   constructor() {
     super();
@@ -14,6 +14,7 @@ class DashboardCredentials extends React.Component {
       otpInput: "",
       otpVerficationStage: false,
       loginSubjectData: null,
+      otpSendState: false,
     };
   }
 
@@ -209,6 +210,7 @@ class DashboardCredentials extends React.Component {
                 <button
                   type="button"
                   className="dashboard-div-otp-verification-popup-bottom-btn"
+                  onClick={() => this.setState({otpVerficationStage : false})}
                 >
                   Cancel
                 </button>

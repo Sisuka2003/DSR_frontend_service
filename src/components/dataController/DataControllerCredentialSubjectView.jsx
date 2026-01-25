@@ -22,11 +22,23 @@ class DataControllerCredentialSubjectView extends React.Component {
 
   rejectDataSubjectRequest = (event) => {
     event.preventDefault();
-    const payload = {
-      dsCode: this.props.selectedSubject?.dsCode?.id,
-      dcCode: this.props.selectedSubject?.dcCode?.id,
-      status: this.props.selectedSubject?.status?.id,
-    };
+
+    let payload;
+    if (this.props.isUserProfile) {
+
+       payload = {
+        dsCode: this.props.selectedSubject?.dsCode?.id,
+        dcCode: this.props.selectedSubject?.dcCode?.id,
+        status: this.props.selectedSubject?.status?.id,
+        isUserProfile: true,
+      };
+    }else{
+      payload = {
+        dsCode: this.props.selectedSubject?.dsCode?.id,
+        dcCode: this.props.selectedSubject?.dcCode?.id,
+        status: this.props.selectedSubject?.status?.id,
+      };
+    }
 
     rejectDataSubjectDataModificationRequest
       .rejectDataSubjectDataModificationRequest(payload)
@@ -40,6 +52,9 @@ class DataControllerCredentialSubjectView extends React.Component {
             "Rejection Went Wrong. Please try again."
         );
       });
+    
+
+
   };
 
   acceptDataSubjectRequest = (event) => {
@@ -66,7 +81,7 @@ class DataControllerCredentialSubjectView extends React.Component {
   };
 
   render() {
-    const { comparisonItem, selectedSubject } = this.props;
+    const { comparisonItem, selectedSubject, isUserProfile } = this.props;
     if (!Array.isArray(comparisonItem)) return null;
     return (
       <div className="data-controller-credential-subject-view-outer">
@@ -119,7 +134,9 @@ class DataControllerCredentialSubjectView extends React.Component {
             </div>
           </div>
           <div className="data-controller-credential-subject-view-outer-popup-footer">
-            <button type="button" onClick={this.acceptDataSubjectRequest}>Accept</button>
+            {!isUserProfile && (
+              <button type="button" onClick={this.acceptDataSubjectRequest}>Accept</button>
+            )}
             <button
               type="button"
               onClick={this.rejectDataSubjectRequest}

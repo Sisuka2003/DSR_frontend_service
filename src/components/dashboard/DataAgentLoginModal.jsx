@@ -1,6 +1,4 @@
 import React from "react";
-import LoginService from "../../services/LoginService";
-import AdminOperations from "../../services/AgentOperations";
 import DataControllerOperations from "../../services/DataControllerOperations";
 import pendingIcon from "../../pending.png";
 import approvedIcon from "../../approved.png";
@@ -391,11 +389,7 @@ class DataAgentLoginModal extends React.Component {
                 </span>
               </div>
             </div>
-            <div className="data-controller-profile-result-div-middle-2-bottom">
-              <button className="data-controller-profile-result-div-middle-2-bottom-btn">
-                Download PDF
-              </button>
-            </div>
+            <div className="data-controller-profile-result-div-middle-2-bottom"></div>
           </div>
           <div className="data-controller-profile-result-div-middle-3"></div>
           <div className="data-controller-profile-result-div-middle-4">

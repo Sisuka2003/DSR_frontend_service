@@ -21,6 +21,15 @@ class DataSubjectOperations {
     });
   }
 
+  requestDataSubjectRelatedDataFromOrganization(payload) {
+    console.log("requestDataSubjectRelatedDataFromOrganization Payload:", payload);
+    return axios.post(`${API_BASE_URL}/requestDataSubjectRelatedDataFromOrganization`, payload, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+
   deleteDataSubjectData(payload) {
     console.log("Delete data subject data payload:", payload);
     return axios.delete(`${API_BASE_URL}/deleteDataSubjectData`, {

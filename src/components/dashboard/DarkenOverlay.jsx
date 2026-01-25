@@ -1,10 +1,12 @@
 import React from "react";
 
-function DarkenOverlay({ isDelete, isModify, checkAlerts }) {
+function DarkenOverlay({ isDelete, isModify, checkAlerts, cssName }) {
+  const isActive = isModify || isDelete || checkAlerts;
+
   return (
     <div
-      className={`data-controller-profile-overlay ${
-        isModify || isDelete || checkAlerts ? "active" : ""
+      className={`${cssName || "data-controller-profile-overlay"} ${
+        isActive ? "active" : ""
       }`}
     />
   );
