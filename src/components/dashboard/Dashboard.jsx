@@ -1,6 +1,5 @@
 import React from "react";
 import "./Dashboard.scss";
-import logo from "../../blob.png";
 import DashboardCredentials from "./DashboardCredentials";
 import Header from "../header/Header";
 import DataControllerLoginModal from "./DataControllerLoginModal";

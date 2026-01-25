@@ -56,7 +56,8 @@ class DataControllerLoginModal extends React.Component {
         .catch((error) => {
           console.error("Login failed:", error.response || error);
           alert(
-            error.response?.data?.responseMessage || "Login failed. Please try again.",
+            error.response?.data?.responseMessage ||
+              "Login failed. Please try again.",
           );
         });
     } else {
@@ -214,7 +215,8 @@ class DataControllerLoginModal extends React.Component {
       .catch((error) => {
         console.error("Deletion failed:", error.response || error);
         alert(
-          error.response?.data?.responseMessage || "Deletion failed. Please try again.",
+          error.response?.data?.responseMessage ||
+            "Deletion failed. Please try again.",
         );
       });
 
@@ -249,7 +251,8 @@ class DataControllerLoginModal extends React.Component {
           error.response || error,
         );
         alert(
-          error.response?.data?.responseMessage || "Fetching failed. Please try again.",
+          error.response?.data?.responseMessage ||
+            "Fetching failed. Please try again.",
         );
       });
   };
@@ -555,7 +558,11 @@ class DataControllerLoginModal extends React.Component {
                   </span>
                 </div>
               </div>
-              <div className="data-controller-profile-result-div-middle-2-bottom"></div>
+              <div className="data-controller-profile-result-div-middle-2-bottom">
+                <button className="data-controller-profile-result-div-middle-2-bottom-btn">
+                  Log out
+                </button>
+              </div>
             </div>
             <div className="data-controller-profile-result-div-middle-3"></div>
             <div className="data-controller-profile-result-div-middle-4">

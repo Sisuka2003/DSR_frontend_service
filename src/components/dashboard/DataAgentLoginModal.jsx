@@ -61,7 +61,7 @@ class DataAgentLoginModal extends React.Component {
           error.response || error,
         );
         alert(
-          error.response?.data?.responseMessage ||
+          error.response?.data?.message ||
             "Agent Fetching failed. Please try again.",
         );
       });
@@ -129,7 +129,7 @@ class DataAgentLoginModal extends React.Component {
           })
           .catch((error) => {
             alert(
-              error.response?.data?.responseMessage ||
+              error.response?.data?.message ||
                 "Data Fetching Went Wrong. Please try again.",
             );
           });
@@ -137,7 +137,7 @@ class DataAgentLoginModal extends React.Component {
       .catch((error) => {
         console.error("Modification failed:", error.response || error);
         alert(
-          error.response?.data?.responseMessage ||
+          error.response?.data?.message ||
             "Modification failed. Please try again.",
         );
       });
@@ -180,7 +180,7 @@ class DataAgentLoginModal extends React.Component {
       .catch((error) => {
         console.error("Deletion failed:", error.response || error);
         alert(
-          error.response?.data?.responseMessage || "Deletion failed. Please try again.",
+          error.response?.data?.message || "Deletion failed. Please try again.",
         );
       });
 
@@ -389,7 +389,11 @@ class DataAgentLoginModal extends React.Component {
                 </span>
               </div>
             </div>
-            <div className="data-controller-profile-result-div-middle-2-bottom"></div>
+            <div className="data-controller-profile-result-div-middle-2-bottom">
+              <button className="data-controller-profile-result-div-middle-2-bottom-btn">
+                Log out
+              </button>
+            </div>
           </div>
           <div className="data-controller-profile-result-div-middle-3"></div>
           <div className="data-controller-profile-result-div-middle-4">
