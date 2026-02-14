@@ -2,6 +2,9 @@ import axios from "axios";
 
 const ACT_ORGANIZATION_RETRIEVAL_FOR_DROPDOWN_URL =
   "http://localhost:8000/app/v1/commons/getActiveOrganizations";
+  
+const ACT_IDENTIFIER_RETRIEVAL_FOR_DROPDOWN_URL =
+  "http://localhost:8000/app/v1/commons/getKeyIdentifiers";
 const API_OTP_BASE_URL = "http://localhost:8000/api/v1/operations/datasubject";
 
 class CommonDataExtraction {
@@ -9,6 +12,9 @@ class CommonDataExtraction {
     return axios.get(ACT_ORGANIZATION_RETRIEVAL_FOR_DROPDOWN_URL);
   }
 
+  getActiveIdentifiers() {
+    return axios.get(ACT_IDENTIFIER_RETRIEVAL_FOR_DROPDOWN_URL);
+  }
   otpCodeRequest(payload) {
     console.log("otpCodeRequest data subject Payload:", payload);
     return axios.post(`${API_OTP_BASE_URL}/generateOtpCode`, payload, {

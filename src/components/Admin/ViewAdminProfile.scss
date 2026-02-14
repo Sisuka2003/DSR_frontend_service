@@ -1,0 +1,229 @@
+.admin-view-profile-section {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .admin-view-profile-section-dev-tools {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: right;
+    align-items: flex-start;
+    background-color: rgb(47, 57, 84);
+    padding-right: 25px;
+    z-index: 100;
+
+    .admin-view-profile-section-dev-tools-close-icon{
+      color: white;
+      font-weight: bold;
+      height: 100%;
+      font-size: 150%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 2%;
+    }
+  }
+
+  .admin-view-profile-section-component-tools {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    .admin-view-profile-section-middle-total {
+      width: 100%;
+      height: 100%;
+      border-left-style: solid;
+      border-left-color: rgb(185, 185, 185);
+      display: flex;
+      justify-content: left;
+      flex-direction: column;
+      align-items: flex-start;
+      overflow: hidden;
+
+      .admin-view-profile-section-middle-top {
+        width: 100%;
+        height: 100%;
+        text-align: justify;
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        align-items: flex-start;
+
+        p{
+          width: 90%;
+        }
+
+        .admin-view-profile-section-middle-top-data-table {
+          width: 90%;
+          height: 70%;
+          font-size: 80%;
+          box-shadow:
+            0px 100px 200px rgba(40, 65, 88, 0.664),
+            inset 0 0px 0 1px rgba(255, 255, 255, 0);
+          border-radius: 15px;
+          padding: 15px;
+          margin-top: 3%;
+
+          .admin-view-profile-section-middle-top-data-table-key-cell {
+            text-align: left;
+            width: 30%;
+            font-weight: bold;
+          }
+
+          .admin-view-profile-section-middle-top-data-table-colon-cell {
+            width: 5%;
+          }
+
+          .admin-view-profile-section-middle-top-data-table-value-cell {
+            text-align: left;
+            width: 70%;
+            .value-input {
+              font-size: 100%;
+            }
+          }
+        }
+      }
+    }
+    
+    .admin-view-profile-section-right {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      .admin-view-profile-section-right-content {
+        width: 100%;
+        height: 100%;
+        background-color: #ffffff;
+
+        .admin-view-profile-section-right-content-top {
+          width: 100%;
+          height: 80%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+
+          .admin-view-profile-section-middle-top-data-table {
+            width: 90%;
+            height: 80%;
+            margin-left: 5%;
+
+            .admin-view-profile-section-middle-top-data-table-key-cell {
+              text-align: left;
+              width: 10%;
+            }
+
+            .admin-view-profile-section-middle-top-data-table-colon-cell {
+              width: 5%;
+            }
+
+            .admin-view-profile-section-middle-top-data-table-value-cell {
+              text-align: left;
+              width: 70%;
+              .value-input {
+                width: 80%;
+                height: 45%;
+                font-size: 90%;
+                border-radius: 5px;
+                border-style: solid;
+                border-color: rgb(185, 185, 185);
+                padding: 8px;
+              }
+            }
+          }
+        }
+
+        .admin-view-profile-section-right-content-top-contr{
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+
+          
+          .admin-view-profile-section-right-content-top-form{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            .admin-view-profile-section-right-content-top-form-orgName
+            ,.admin-view-profile-section-right-content-top-form-org-username
+            ,.admin-view-profile-section-right-content-top-form-org-password
+            ,.admin-view-profile-section-right-content-top-form-agt-count{
+              width: 80%;
+              height: 8%;
+              border-style: solid;
+              border-color: rgb(76, 86, 105);
+              border-radius: 5px;
+              margin-top: 2%;
+              outline: none;
+            }
+            .admin-view-profile-section-right-content-top-form-key-id{
+              width: 80.8%;
+              height: 9.5%;
+              border-style: solid;
+              border-color: rgb(76, 86, 105);
+              border-width: 2px;
+              border-radius: 5px;
+              margin-top: 2%;
+              outline: none;
+            }
+
+            .admin-view-profile-section-right-content-top-form-action{
+              width: 100%;
+              height: 20%;
+              margin-top: 3%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-align: center;
+              input {
+                width: 60%;
+                height: 60%;
+                border-radius: 15px;
+                border-style: none;
+                background-color: rgb(54, 69, 87);
+                color: white;
+              }
+            }
+
+          }
+        }
+
+        .admin-view-profile-section-right-content-actions {
+          width: 100%;
+          height: 15%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: #a1acc250;
+          margin-top: 3%;
+
+          button {
+            width: 30%;
+            height: 50%;
+            border-radius: 15px;
+            border: none;
+            background-color: rgb(47, 57, 84);
+            color: white;
+            margin-left: 2%;
+          }
+        }
+      }
+    }
+  }
+}

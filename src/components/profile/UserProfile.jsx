@@ -282,6 +282,8 @@ class UserProfile extends React.Component {
   refreshUserData = () => {
     this.fetchDataFromDsCode(this.props.customerData);
   };
+
+  
   render() {
     const customerDataToDisplay =
       this.state.internalCustomerData || this.props.customerData;

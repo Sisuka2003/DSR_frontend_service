@@ -21,6 +21,14 @@ class DataControllerOperations {
     });
   }
 
+  addNewDataController(payload) {
+    console.log("Insert data controller data Payload:", payload);
+    return axios.post(`${API_BASE_URL}/addNewDataController`, payload, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
   requestAssociatedDataSubjectsWithOrganization(payload) {
     console.log("Request Associate Data Subject data from data controller Payload:", payload);
     return axios.post(`${API_BASE_URL}/requestAssociatedDataSubjectsWithOrganization`, payload, {

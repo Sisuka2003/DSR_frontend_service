@@ -81,7 +81,7 @@ class DataControllerCredentialSubjectView extends React.Component {
   };
 
   render() {
-    const { comparisonItem, selectedSubject, isUserProfile } = this.props;
+    const { comparisonItem, isUserProfile } = this.props;
     if (!Array.isArray(comparisonItem)) return null;
     return (
       <div className="data-controller-credential-subject-view-outer">

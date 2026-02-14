@@ -2,6 +2,8 @@ import React from "react";
 import CommonService from "../../services/CommonService";
 import LoginService from "../../services/LoginService";
 import DarkenOverlay from "./DarkenOverlay";
+import CaptchaVerifier from "../captcha/RecaptchaVerification";
+
 class DashboardCredentials extends React.Component {
   constructor() {
     super();
@@ -15,6 +17,7 @@ class DashboardCredentials extends React.Component {
       otpVerficationStage: false,
       loginSubjectData: null,
       otpSendState: false,
+      captchaToken: null,
     };
   }
 
@@ -30,7 +33,7 @@ class DashboardCredentials extends React.Component {
     const selectedOrgId = Number(event.target.value);
 
     const selectedOrg = this.state.activeOrgs.find(
-      (org) => org.id === selectedOrgId
+      (org) => org.id === selectedOrgId,
     );
 
     const placeHolderText = selectedOrg?.identificationKey?.description
@@ -84,7 +87,7 @@ class DashboardCredentials extends React.Component {
           .then((response) => {
             console.log(
               "OTP Generation Request Payload success:",
-              response.data.data
+              response.data.data,
             );
             this.setState({
               otpVerficationStage: true,
@@ -94,35 +97,41 @@ class DashboardCredentials extends React.Component {
             console.error("OTP Generation failed:", error.response || error);
             alert(
               error.response?.data?.responseMessage ||
-                "OTP Generation failed. Please try again."
+                "OTP Generation failed. Please try again.",
             );
           });
       })
       .catch((error) => {
         console.error("Login failed:", error.response || error);
         alert(
-          error.response?.data?.responseMessage || "Login failed. Please try again."
+          error.response?.data?.responseMessage ||
+            "Login failed. Please try again.",
         );
       });
   };
 
+  handleCaptchaVerify = (token) => {
+    this.setState({ captchaToken: token });
+  };
+
   handleOtpVerification = (event) => {
     event.preventDefault();
+    if (!this.state.captchaToken) {
+      alert("Please verify that you are not a robot");
+      return;
+    }
     const payload = {
       otpCode: this.state.otpInput,
       dsCode: this.state.loginSubjectData?.dsCode?.id,
+      captchaToken: this.state.captchaToken,
     };
 
     CommonService.otpCodeVerification(payload)
       .then((response) => {
         console.log(
           "OTP Verification Request Payload success:",
-          response.data.data
+          response.data.data,
         );
-        this.setState({
-          otpVerficationStage: false,
-        });
-
         if (this.props.onLoginSuccess) {
           this.props.onLoginSuccess(this.state.loginSubjectData);
         }
@@ -131,9 +140,14 @@ class DashboardCredentials extends React.Component {
         console.error("OTP Verification failed:", error.response || error);
         alert(
           error.response?.data?.responseMessage ||
-            "OTP Verification failed. Please try again."
+            "OTP Verification failed. Please try again.",
         );
       });
+
+    this.setState({
+      otpVerficationStage: false,
+      captchaToken: null,
+    });
   };
 
   render() {
@@ -198,6 +212,7 @@ class DashboardCredentials extends React.Component {
                     }
                   />
                 </span>
+                <CaptchaVerifier onVerify={this.handleCaptchaVerify} />
               </div>
               <div className="dashboard-div-otp-verification-popup-bottom">
                 <button
@@ -210,7 +225,7 @@ class DashboardCredentials extends React.Component {
                 <button
                   type="button"
                   className="dashboard-div-otp-verification-popup-bottom-btn"
-                  onClick={() => this.setState({otpVerficationStage : false})}
+                  onClick={() => this.setState({ otpVerficationStage: false })}
                 >
                   Cancel
                 </button>
@@ -218,6 +233,7 @@ class DashboardCredentials extends React.Component {
             </div>
           </div>
         )}
+
       </>
     );
   }

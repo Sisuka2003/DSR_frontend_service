@@ -1,0 +1,63 @@
+    .admin-dashboard-section-2-analytics-chart {
+      width: 90%;
+      height: 30%;
+      box-shadow:
+        0 4px 15px 0 rgba(0, 0, 0, 0.15),
+        0 0px 0px 0 rgba(0, 0, 0, 0.19);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .admin-dashboard-section-2-analytics-chart-indicators {
+        width: 18%;
+        height: 80%;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 10px;
+      }
+
+      .admin-dashboard-section-2-analytics-chart-illustration {
+        width: 80%;
+        height: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-around;
+
+        .admin-dashboard-section-2-analytics-chart-illustration-bar-pend {
+          // width: 40%;
+          height: 10%;
+          background-color: rgb(144, 182, 207);
+          border-top-right-radius: 15px;
+          border-bottom-right-radius: 15px;
+        }
+
+        .admin-dashboard-section-2-analytics-chart-illustration-bar-approved {
+          // width: 90%;
+          height: 10%;
+          background-color: rgb(184, 202, 80);
+          border-top-right-radius: 15px;
+          border-bottom-right-radius: 15px;
+        }
+
+        .admin-dashboard-section-2-analytics-chart-illustration-bar-rejected {
+          // width: 50%;
+          height: 10%;
+          background-color: rgb(204, 81, 81);
+          border-top-right-radius: 15px;
+          border-bottom-right-radius: 15px;
+        }
+
+        .admin-dashboard-section-2-analytics-chart-illustration-bar-queued {
+          // width: 80%;
+          height: 10%;
+          background-color: rgb(149, 88, 199);
+          border-top-right-radius: 15px;
+          border-bottom-right-radius: 15px;
+        }
+      }
+    }

@@ -9,6 +9,8 @@ import queuedIcon from "../../queued.png";
 import DataControllerCredentialSubjectView from "../dataController/DataControllerCredentialSubjectView";
 import DarkenOverlay from "./DarkenOverlay";
 import DataAgentLoginModal from "./DataAgentLoginModal";
+import AdminOperations from "../../services/AdminOperations";
+import AdministratorDashboard from "../Admin/AdminstratorDashboard";
 
 class DataControllerLoginModal extends React.Component {
   constructor() {
@@ -31,7 +33,9 @@ class DataControllerLoginModal extends React.Component {
       comparisonItem: null,
       isAdminLoginSuccess: false,
       isAgentLoginSuccess: false,
+      adminLoggedInSuccessfully: false,
       userData: null,
+      defaultView: true,
     };
   }
 
@@ -42,6 +46,8 @@ class DataControllerLoginModal extends React.Component {
     const payload = {
       orgUsername: this.usernameRef.current.value,
       orgPassword: this.passwordRef.current.value,
+      adminUsername: this.usernameRef.current.value,
+      adminPassword: this.passwordRef.current.value,
     };
     if (orgAdminChecked) {
       LoginService.LoginDataController(payload)
@@ -54,11 +60,22 @@ class DataControllerLoginModal extends React.Component {
           });
         })
         .catch((error) => {
-          console.error("Login failed:", error.response || error);
-          alert(
-            error.response?.data?.responseMessage ||
-              "Login failed. Please try again.",
-          );
+          AdminOperations.GetAdminData(payload)
+            .then((response) => {
+              console.log("Admin Data Fetched :", response?.data);
+              this.setState({
+                userData: response?.data?.data || {},
+                adminLoggedInSuccessfully: true,
+                defaultView: false,
+              });
+            })
+            .catch((error1) => {
+              console.error("Admin Data Fetched failed:", error1);
+              alert(
+                error1.response?.data?.responseMessage ||
+                  "Admin Fetching failed. Please try again.",
+              );
+            });
         });
     } else {
       AgentOperations.LoginAgentDataController(payload)
@@ -481,6 +498,7 @@ class DataControllerLoginModal extends React.Component {
 
     return (
       <>
+      {this.state.defaultView  && (
         <form
           className={`dashboard-div-popup-container ${
             this.state.isAdminLoginSuccess ? "deactive" : ""
@@ -513,7 +531,7 @@ class DataControllerLoginModal extends React.Component {
             value="Login"
           />
         </form>
-
+      )}
         {this.state.isAdminLoginSuccess && (
           <div
             className="data-controller-profile-result-div-middle"
@@ -849,6 +867,10 @@ class DataControllerLoginModal extends React.Component {
 
         {this.state.isAgentLoginSuccess && (
           <DataAgentLoginModal userData={this.state.userData} />
+        )}
+
+        {this.state.adminLoggedInSuccessfully && (
+          <AdministratorDashboard adminUsername={this.state.userData.username} adminPassword={this.state.userData.password}/>
         )}
       </>
     );
