@@ -70,6 +70,7 @@ class Dashboard extends React.Component {
               <DataControllerLoginModal
                 closePopup={this.closePopup}
                 onAdminLogin={this.props.onAdminLogin}
+                onUserLogout={this.handleHomeClick}
               />
             </div>
           )}

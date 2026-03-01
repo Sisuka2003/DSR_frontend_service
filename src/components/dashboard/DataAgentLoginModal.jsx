@@ -29,7 +29,25 @@ class DataAgentLoginModal extends React.Component {
   componentDidMount() {
     this.setState({ userData: this.props.userData });
   }
+  handleLogout = () => {
+    // Reset internal agent state
+    this.setState({
+      associatedData: null,
+      checkAlerts: false,
+      selectedOption: 0,
+      isModify: false,
+      isDelete: false,
+      editableData: {},
+      showSubjectPopup: false,
+      comparisonItem: null,
+      userData: null,
+    });
 
+    // Call parent logout (Dashboard)
+    if (this.props.onUserLogout) {
+      this.props.onUserLogout();
+    }
+  };
   formatKeyLabel = (key) => {
     return key
       .replace(/([a-z])([A-Z])/g, "$1 $2") // camelCase → camel Case
@@ -41,7 +59,9 @@ class DataAgentLoginModal extends React.Component {
   handleOnAlertClicked = (event) => {
     event.preventDefault();
     const payload = {
-      dcCode: this.state.userData?.id,
+      agentCode: this.state.userData?.id,
+      dcCode: this.state.userData?.dataController?.id,
+      isAgentAlert: true,
     };
 
     DataControllerOperations.requestAssociatedDataSubjectsWithOrganization(
@@ -390,7 +410,10 @@ class DataAgentLoginModal extends React.Component {
               </div>
             </div>
             <div className="data-controller-profile-result-div-middle-2-bottom">
-              <button className="data-controller-profile-result-div-middle-2-bottom-btn">
+              <button
+                className="data-controller-profile-result-div-middle-2-bottom-btn"
+                onClick={this.handleLogout}
+              >
                 Log out
               </button>
             </div>
@@ -643,16 +666,22 @@ class DataAgentLoginModal extends React.Component {
                     </div>
 
                     <div className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action">
-                      <select
-                        defaultValue={item.activityStatus?.code}
-                        className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-dropdown"
-                      >
-                        <option value="PEND">Pending</option>
-                        <option value="APPR">Approved</option>
-                        <option value="REJC">Rejected</option>
-                        <option value="QUEU">Queued</option>
-                        <option value="SKIP">Skipped</option>
-                      </select>
+                      <span className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-dropdown">
+                        {(() => {
+                          switch (item.activityStatus?.code) {
+                            case "PEND":
+                              return "Pending";
+                            case "APPR":
+                              return "Approved";
+                            case "REJC":
+                              return "Rejected";
+                            case "QUEU":
+                              return "Queued";
+                            case "SKIP":
+                              return "Skipped";
+                          }
+                        })()}
+                      </span>
                     </div>
                   </div>
                 ))}

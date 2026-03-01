@@ -38,6 +38,32 @@ class DataControllerLoginModal extends React.Component {
       defaultView: true,
     };
   }
+  handleLogout = () => {
+    this.setState({
+      isAdminLoginSuccess: false,
+      isAgentLoginSuccess: false,
+      adminLoggedInSuccessfully: false,
+      userData: null,
+      internalUserData: null,
+      defaultView: true,
+      selectedOption: 0,
+      isModify: false,
+      isDelete: false,
+      deleteConfirmed: false,
+      editableData: {},
+      associatedData: null,
+      selectedSubject: null,
+      showSubjectPopup: false,
+      comparisonItem: null,
+    });
+
+    if (this.props.onUserLogout) {
+      this.props.onUserLogout();
+    }
+    if (this.props.closePopup) {
+      this.props.closePopup();
+    }
+  };
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -253,6 +279,7 @@ class DataControllerLoginModal extends React.Component {
     event.preventDefault();
     const payload = {
       dcCode: this.state.userData?.id,
+      isAgentAlert: false,
     };
 
     DataControllerOperations.requestAssociatedDataSubjectsWithOrganization(
@@ -581,7 +608,10 @@ class DataControllerLoginModal extends React.Component {
                 </div>
               </div>
               <div className="data-controller-profile-result-div-middle-2-bottom">
-                <button className="data-controller-profile-result-div-middle-2-bottom-btn">
+                <button
+                  className="data-controller-profile-result-div-middle-2-bottom-btn"
+                  onClick={this.handleLogout}
+                >
                   Log out
                 </button>
               </div>
@@ -837,16 +867,22 @@ class DataControllerLoginModal extends React.Component {
                       </div>
 
                       <div className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action">
-                        <select
-                          defaultValue={item.activityStatus?.code}
-                          className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-dropdown"
-                        >
-                          <option value="PEND">Pending</option>
-                          <option value="APPR">Approved</option>
-                          <option value="REJC">Rejected</option>
-                          <option value="QUEU">Queued</option>
-                          <option value="SKIP">Skipped</option>
-                        </select>
+                        <span className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-dropdown">
+                          {(() => {
+                            switch (item.activityStatus?.code) {
+                              case "PEND":
+                                return "Pending";
+                              case "APPR":
+                                return "Approved";
+                              case "REJC":
+                                return "Rejected";
+                              case "QUEU":
+                                return "Queued";
+                              case "SKIP":
+                                return "Skipped";
+                            }
+                          })()}
+                        </span>
                       </div>
                     </div>
                   ))}
@@ -870,15 +906,8 @@ class DataControllerLoginModal extends React.Component {
         )}
 
         {this.state.isAgentLoginSuccess && (
-          <DataAgentLoginModal userData={this.state.userData} />
+          <DataAgentLoginModal userData={this.state.userData} onUserLogout={this.props.onUserLogout}/>
         )}
-        {/* 
-        {this.state.adminLoggedInSuccessfully && (
-          <AdministratorDashboard
-            adminUsername={this.state.userData.username}
-            adminPassword={this.state.userData.password}
-          />
-        )} */}
       </>
     );
   }
