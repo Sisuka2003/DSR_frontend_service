@@ -20,6 +20,7 @@ class Dashboard extends React.Component {
     this.setState({ showModal: false });
   };
   handleLoginSuccess = (data) => {
+    console.log("Login successful, received data:", data);
     this.setState({ showResultSection: true, customerData: data });
   };
 
@@ -66,7 +67,10 @@ class Dashboard extends React.Component {
               className="dashboard-div-popup-overlay"
               onClick={this.closePopup}
             >
-              <DataControllerLoginModal closePopup={this.closePopup} />
+              <DataControllerLoginModal
+                closePopup={this.closePopup}
+                onAdminLogin={this.props.onAdminLogin}
+              />
             </div>
           )}
         </div>
@@ -83,6 +87,7 @@ class Dashboard extends React.Component {
           <UserProfile
             customerData={this.state.customerData}
             onDeleteSuccess={this.handleHomeClick}
+            onUserLogout={this.handleHomeClick}
           />
         </div>
       </section>

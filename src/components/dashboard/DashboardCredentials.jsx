@@ -18,6 +18,7 @@ class DashboardCredentials extends React.Component {
       loginSubjectData: null,
       otpSendState: false,
       captchaToken: null,
+      loading: false,
     };
   }
 
@@ -77,6 +78,7 @@ class DashboardCredentials extends React.Component {
 
         this.setState({
           loginSubjectData: response?.data?.data,
+          loading: true,
         });
         const otpCodeRequestPayload = {
           recipientEmail: response.data?.data?.dsCode?.emailAddress,
@@ -91,6 +93,7 @@ class DashboardCredentials extends React.Component {
             );
             this.setState({
               otpVerficationStage: true,
+              loading: false,
             });
           })
           .catch((error) => {
@@ -234,6 +237,11 @@ class DashboardCredentials extends React.Component {
           </div>
         )}
 
+        {this.state.loading && (
+          <div className="full-page-loader">
+            <div className="loader-spinner"></div>
+          </div>
+        )}
       </>
     );
   }

@@ -13,7 +13,11 @@ function CaptchaVerifier({ onVerify }) {
   };
 
   return (
-    <div style={{ marginTop: "25px" }}>
+    <div
+      style={{
+        marginTop: "25px",
+      }}
+    >
       <ReCAPTCHA
         sitekey="6LfMGGAsAAAAAOTL1mJ8HSltu_vZ3fb_9CKMbLbc"
         onChange={handleCaptchaChange}

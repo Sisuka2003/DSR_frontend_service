@@ -68,6 +68,10 @@ class DataControllerLoginModal extends React.Component {
                 adminLoggedInSuccessfully: true,
                 defaultView: false,
               });
+
+              if (this.props.onAdminLogin) {
+                this.props.onAdminLogin(response?.data?.data, "ADMIN");
+              }
             })
             .catch((error1) => {
               console.error("Admin Data Fetched failed:", error1);
@@ -498,40 +502,40 @@ class DataControllerLoginModal extends React.Component {
 
     return (
       <>
-      {this.state.defaultView  && (
-        <form
-          className={`dashboard-div-popup-container ${
-            this.state.isAdminLoginSuccess ? "deactive" : ""
-          }`}
-          onClick={(e) => e.stopPropagation()}
-          onSubmit={this.handleSubmit}
-        >
-          <h1>Sign In</h1>
-          <input
-            ref={this.usernameRef}
-            className="dashboard-div-popup-container-form-input-username"
-            type="text"
-            placeholder="Please Enter Your Username"
-            required
-          />
-          <input
-            ref={this.passwordRef}
-            className="dashboard-div-popup-container-form-input-password"
-            type="password"
-            placeholder="Please Enter Your Password"
-            required
-          />
-          <label>
-            <input type="checkbox" ref={this.checkBoxRef} />
-            &nbsp; Yes, I am a Data Controller Admin
-          </label>
-          <input
-            className="dashboard-div-popup-container-credentials-form-submit"
-            type="submit"
-            value="Login"
-          />
-        </form>
-      )}
+        {this.state.defaultView && (
+          <form
+            className={`dashboard-div-popup-container ${
+              this.state.isAdminLoginSuccess ? "deactive" : ""
+            }`}
+            onClick={(e) => e.stopPropagation()}
+            onSubmit={this.handleSubmit}
+          >
+            <h1>Sign In</h1>
+            <input
+              ref={this.usernameRef}
+              className="dashboard-div-popup-container-form-input-username"
+              type="text"
+              placeholder="Please Enter Your Username"
+              required
+            />
+            <input
+              ref={this.passwordRef}
+              className="dashboard-div-popup-container-form-input-password"
+              type="password"
+              placeholder="Please Enter Your Password"
+              required
+            />
+            <label>
+              <input type="checkbox" ref={this.checkBoxRef} />
+              &nbsp; Yes, I am a Data Controller Admin
+            </label>
+            <input
+              className="dashboard-div-popup-container-credentials-form-submit"
+              type="submit"
+              value="Login"
+            />
+          </form>
+        )}
         {this.state.isAdminLoginSuccess && (
           <div
             className="data-controller-profile-result-div-middle"
@@ -868,10 +872,13 @@ class DataControllerLoginModal extends React.Component {
         {this.state.isAgentLoginSuccess && (
           <DataAgentLoginModal userData={this.state.userData} />
         )}
-
+        {/* 
         {this.state.adminLoggedInSuccessfully && (
-          <AdministratorDashboard adminUsername={this.state.userData.username} adminPassword={this.state.userData.password}/>
-        )}
+          <AdministratorDashboard
+            adminUsername={this.state.userData.username}
+            adminPassword={this.state.userData.password}
+          />
+        )} */}
       </>
     );
   }

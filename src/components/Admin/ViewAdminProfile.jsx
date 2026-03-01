@@ -307,7 +307,7 @@ class ViewAdminProfile extends React.Component {
                       onChange={this.handleControllerInputChange}
                     />
                     <input
-                      type="text"
+                      type="number"
                       name="agentCount"
                       placeholder="Organization Agent Count"
                       className="admin-view-profile-section-right-content-top-form-agt-count"

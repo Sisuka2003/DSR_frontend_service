@@ -75,7 +75,7 @@ class AdministratorDashboard extends React.Component {
     return (
       <section className="admindashboard-outer-section">
         {/* vertical action bar */}
-        <ActionBar />
+        <ActionBar handleLogout={this.props.onAdminLogout}/>
 
         {/* middle content*/}
         <div className="admin-dashboard-section-2">
@@ -94,8 +94,6 @@ class AdministratorDashboard extends React.Component {
             rejectedRecords={this.state.rejectedRecords}
           />
         </div>
-
-        <div className="admin-dashboard-section-3"></div>
       </section>
     );
   }

@@ -90,11 +90,9 @@ toggleOverlay = (value) => {
                 isControllerAdditionRequired
               />
             )}
-            {/* 
-            {this.state.logout && (
-              //TODO - Need to add the logout feature.
-             )} 
-              */}
+
+            
+            {this.state.activePopup === "LGT" && this.props.handleLogout()}
           </div>
         )}
       </>
