@@ -812,26 +812,13 @@ class DataControllerLoginModal extends React.Component {
               }`}
             >
               <div className="data-controller-profile-data-subjects-alert-div-top-outer">
-                <form className="data-controller-profile-data-subjects-alert-div-top-outer-form">
-                  <input
-                    type="text"
-                    placeholder="Search data subject by name"
-                    className="data-controller-profile-data-subjects-alert-div-top-outer-form-search-field"
-                  />
-                  <input
-                    type="submit"
-                    value="Search"
-                    className="data-controller-profile-data-subjects-alert-div-top-outer-form-search-btn"
-                  />
-
-                  <button
-                    type="button"
-                    className="data-controller-profile-data-subjects-alert-div-top-outer-form-cancel-btn"
-                    onClick={() => this.setState({ checkAlerts: false })}
-                  >
-                    cancel
-                  </button>
-                </form>
+                <button
+                  type="button"
+                  className="data-controller-profile-data-subjects-alert-div-top-outer-form-cancel-btn"
+                  onClick={() => this.setState({ checkAlerts: false })}
+                >
+                  cancel
+                </button>
               </div>
 
               <div className="data-controller-profile-data-subjects-alert-div-middle-outer">
@@ -906,7 +893,10 @@ class DataControllerLoginModal extends React.Component {
         )}
 
         {this.state.isAgentLoginSuccess && (
-          <DataAgentLoginModal userData={this.state.userData} onUserLogout={this.props.onUserLogout}/>
+          <DataAgentLoginModal
+            userData={this.state.userData}
+            onUserLogout={this.props.onUserLogout}
+          />
         )}
       </>
     );

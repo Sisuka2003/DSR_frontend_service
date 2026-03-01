@@ -125,7 +125,6 @@ class CheckAlerts extends React.Component {
       item.adminActivityStatus?.code === "APPR" ||
       item.adminActivityStatus?.code === "REJC"
     ) {
-    
       switch (item.adminActivityStatus?.code) {
         case "APPR":
           return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-approved";
@@ -226,26 +225,13 @@ class CheckAlerts extends React.Component {
           }`}
         >
           <div className="data-controller-profile-data-subjects-alert-div-top-outer">
-            <form className="data-controller-profile-data-subjects-alert-div-top-outer-form">
-              <input
-                type="text"
-                placeholder="Search data subject by name"
-                className="data-controller-profile-data-subjects-alert-div-top-outer-form-search-field"
-              />
-              <input
-                type="submit"
-                value="Search"
-                className="data-controller-profile-data-subjects-alert-div-top-outer-form-search-btn"
-              />
-
-              <button
-                type="button"
-                className="data-controller-profile-data-subjects-alert-div-top-outer-form-cancel-btn"
-                onClick={() => this.props.setCheckAlerts(false)}
-              >
-                cancel
-              </button>
-            </form>
+            <button
+              type="button"
+              className="data-controller-profile-data-subjects-alert-div-top-outer-form-cancel-btn"
+              onClick={() => this.props.setCheckAlerts(false)}
+            >
+              cancel
+            </button>
           </div>
 
           <div className="data-controller-profile-data-subjects-alert-div-middle-outer">
@@ -272,16 +258,22 @@ class CheckAlerts extends React.Component {
                   </div>
 
                   <div className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action">
-                    <select
-                      defaultValue={item.subjectActivityStatus?.code}
-                      className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-dropdown"
-                    >
-                      <option value="PEND">Pending</option>
-                      <option value="APPR">Approved</option>
-                      <option value="REJC">Rejected</option>
-                      <option value="QUEU">Queued</option>
-                      <option value="SKIP">Skipped</option>
-                    </select>
+                    <span className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-dropdown">
+                      {(() => {
+                        switch (item.subjectActivityStatus?.code) {
+                          case "PEND":
+                            return "Pending";
+                          case "APPR":
+                            return "Approved";
+                          case "REJC":
+                            return "Rejected";
+                          case "QUEU":
+                            return "Queued";
+                          case "SKIP":
+                            return "Skipped";
+                        }
+                      })()}
+                    </span>
                   </div>
                 </div>
               ))}

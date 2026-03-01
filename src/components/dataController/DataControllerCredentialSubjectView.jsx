@@ -2,7 +2,6 @@ import React from "react";
 import "./DataControllerCredentialSubjectView.scss";
 import rejectDataSubjectDataModificationRequest from "../../services/DataControllerOperations";
 import modifyDataSubjectData from "../../services/DataSubjectOperations";
-import AdminOperations from "../../services/AgentOperations";
 
 class DataControllerCredentialSubjectView extends React.Component {
   constructor() {
@@ -25,14 +24,13 @@ class DataControllerCredentialSubjectView extends React.Component {
 
     let payload;
     if (this.props.isUserProfile) {
-
-       payload = {
+      payload = {
         dsCode: this.props.selectedSubject?.dsCode?.id,
         dcCode: this.props.selectedSubject?.dcCode?.id,
         status: this.props.selectedSubject?.status?.id,
         isUserProfile: true,
       };
-    }else{
+    } else {
       payload = {
         dsCode: this.props.selectedSubject?.dsCode?.id,
         dcCode: this.props.selectedSubject?.dcCode?.id,
@@ -49,12 +47,9 @@ class DataControllerCredentialSubjectView extends React.Component {
       .catch((error) => {
         alert(
           error.response?.data?.responseMessage ||
-            "Rejection Went Wrong. Please try again."
+            "Rejection Went Wrong. Please try again.",
         );
       });
-    
-
-
   };
 
   acceptDataSubjectRequest = (event) => {
@@ -75,7 +70,7 @@ class DataControllerCredentialSubjectView extends React.Component {
       .catch((error) => {
         alert(
           error.response?.data?.responseMessage ||
-            "Modification Went Wrong. Please try again."
+            "Modification Went Wrong. Please try again.",
         );
       });
   };
@@ -87,7 +82,11 @@ class DataControllerCredentialSubjectView extends React.Component {
       <div className="data-controller-credential-subject-view-outer">
         <div className="data-controller-credential-subject-view-outer-popup">
           <div className="data-controller-credential-subject-view-outer-popup-header">
-            <button onClick={this.props.onClose}>✕</button>
+            <div className="data-controller-credential-subject-view-outer-popup-header-left">
+            </div>
+            <div className="data-controller-credential-subject-view-outer-popup-header-right">
+              <button onClick={this.props.onClose}>✕</button>
+            </div>
           </div>
           <div className="data-controller-credential-subject-view-outer-popup-items">
             <div className="data-controller-credential-subject-view-outer-popup-item-left">
@@ -122,7 +121,7 @@ class DataControllerCredentialSubjectView extends React.Component {
                           {String(row.oldValue)}
                         </span>
                       </td>
-                      <td className="data-controller-credential-subject-view-outer-popup-body-diff-table-tb-diff-row-data">
+                      <td className="data-controller-credential-subject-view-outer-popup-body-diff-table-tb-diff-row-data-end">
                         <span className="data-controller-credential-subject-view-outer-popup-body-diff-table-tb-diff-new">
                           {String(row.newValue)}
                         </span>
@@ -135,12 +134,11 @@ class DataControllerCredentialSubjectView extends React.Component {
           </div>
           <div className="data-controller-credential-subject-view-outer-popup-footer">
             {!isUserProfile && (
-              <button type="button" onClick={this.acceptDataSubjectRequest}>Accept</button>
+              <button type="button" onClick={this.acceptDataSubjectRequest}>
+                Accept
+              </button>
             )}
-            <button
-              type="button"
-              onClick={this.rejectDataSubjectRequest}
-            >
+            <button type="button" onClick={this.rejectDataSubjectRequest}>
               Reject
             </button>
           </div>

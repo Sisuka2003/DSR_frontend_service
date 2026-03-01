@@ -18,54 +18,28 @@
   .data-controller-profile-data-subjects-alert-div-top-outer {
     width: 100%;
     height: 10%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     border-bottom: 2px solid #31383d;
-
-    .data-controller-profile-data-subjects-alert-div-top-outer-form {
-      width: 80%;
-      height: 100%;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-
-      .data-controller-profile-data-subjects-alert-div-top-outer-form-search-field {
-        width: 55%;
-        border-radius: 10px;
-        height: 35%;
-        border-style: solid;
-        outline: none;
-      }
-      .data-controller-profile-data-subjects-alert-div-top-outer-form-search-btn {
-        width: 20%;
-        height: 40%;
-        border-radius: 10px;
-        background-color: #31383d;
-        outline: none;
-        border: none;
-        color: white;
-        cursor: pointer;
-      }
-
-      .data-controller-profile-data-subjects-alert-div-top-outer-form-cancel-btn {
-        width: 15%;
-        height: 40%;
-        border: none;
-        outline: none;
-        color: white;
-        border-radius: 10px;
-        background-color: #94373d;
-        outline: none;
-        border: none;
-        cursor: pointer;
-      }
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    .data-controller-profile-data-subjects-alert-div-top-outer-form-cancel-btn {
+      width: 15%;
+      height: 50%;
+      border: none;
+      outline: none;
+      color: white;
+      border-radius: 10px;
+      background-color: #94373d;
+      outline: none;
+      border: none;
+      cursor: pointer;
+      margin-top: 1rem;
     }
   }
 
   .data-controller-profile-data-subjects-alert-div-middle-outer {
     width: 100%;
-    height: 80%;
+    height: 90%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -166,7 +140,7 @@
     }
 
     .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-activity-status {
-      width: 15%;
+      width: 18%;
       height: 100%;
       display: flex;
       justify-content: center;
@@ -175,7 +149,7 @@
       pointer-events: none;
 
       .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity {
-        width: 32%;
+        width: 28%;
         height: 60%;
         background-color: rgba(113, 122, 134, 0.137);
         border-radius: 100%;
@@ -252,54 +226,30 @@
     width: 100%;
     height: 10%;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-end;
+    align-items: flex-start;
     overflow: hidden;
+    padding-right: 2rem;
     border-bottom: 2px solid #31383d;
 
-    .data-controller-profile-data-subjects-alert-div-top-outer-form {
-      width: 80%;
-      height: 100%;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-
-      .data-controller-profile-data-subjects-alert-div-top-outer-form-search-field {
-        width: 55%;
-        border-radius: 10px;
-        height: 35%;
-        border-style: solid;
-        outline: none;
-      }
-      .data-controller-profile-data-subjects-alert-div-top-outer-form-search-btn {
-        width: 20%;
-        height: 40%;
-        border-radius: 10px;
-        background-color: #31383d;
-        outline: none;
-        border: none;
-        color: white;
-        cursor: pointer;
-      }
-
-      .data-controller-profile-data-subjects-alert-div-top-outer-form-cancel-btn {
-        width: 15%;
-        height: 40%;
-        border: none;
-        outline: none;
-        color: white;
-        border-radius: 10px;
-        background-color: #94373d;
-        outline: none;
-        border: none;
-        cursor: pointer;
-      }
+    .data-controller-profile-data-subjects-alert-div-top-outer-form-cancel-btn {
+      width: 15%;
+      height: 50%;
+      border: none;
+      outline: none;
+      color: white;
+      border-radius: 10px;
+      background-color: #94373d;
+      outline: none;
+      border: none;
+      cursor: pointer;
+      margin-top: 1rem;
     }
   }
 
   .data-controller-profile-data-subjects-alert-div-middle-outer {
     width: 100%;
-    height: 80%;
+    height: 90%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -400,7 +350,7 @@
     }
 
     .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-activity-status {
-      width: 15%;
+      width: 18%;
       height: 100%;
       display: flex;
       justify-content: center;
@@ -409,7 +359,7 @@
       pointer-events: none;
 
       .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity {
-        width: 32%;
+        width: 28%;
         height: 60%;
         background-color: rgba(113, 122, 134, 0.137);
         border-radius: 100%;
