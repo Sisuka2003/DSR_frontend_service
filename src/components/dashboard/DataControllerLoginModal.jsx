@@ -303,6 +303,7 @@ class DataControllerLoginModal extends React.Component {
     const payload = {
       dcCode: this.state.userData?.id,
       isAgentAlert: false,
+      isTaskAssign: false,
     };
 
     DataControllerOperations.requestAssociatedDataSubjectsWithOrganization(
