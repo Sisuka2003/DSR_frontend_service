@@ -62,6 +62,7 @@ class DataAgentLoginModal extends React.Component {
       agentCode: this.state.userData?.id,
       dcCode: this.state.userData?.dataController?.id,
       isAgentAlert: true,
+      isTaskAssign: false,
     };
 
     DataControllerOperations.requestAssociatedDataSubjectsWithOrganization(

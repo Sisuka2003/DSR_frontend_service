@@ -1,0 +1,179 @@
+.agent-task-assign-view-outer {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 10001;
+  opacity: 1;
+  visibility: visible;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.76);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .agent-task-assign-view-outer-popup {
+    width: 70%;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: white;
+
+    .agent-task-assign-view-outer-popup-header {
+      width: 100%;
+      height: 15%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgb(40, 61, 75);
+
+      .agent-task-assign-view-outer-popup-header-left {
+        width: 47%;
+        height: 100%;
+        background-image: url("../../logo.png");
+        background-size: 7%;
+        background-repeat: no-repeat;
+        background-position: left;
+      }
+      .agent-task-assign-view-outer-popup-header-right {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        justify-content: flex-end;
+
+        button {
+          background-color: transparent;
+          border: none;
+          color: white;
+          font-size: 180%;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .agent-task-assign-table-wrapper {
+      width: 95%;
+      background-color: rgb(187, 190, 196);
+      height: 65%;
+      margin-top: 1%;
+      overflow-y: auto;
+    }
+
+    .agent-task-assign-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+
+      thead {
+        background-color: rgb(40, 61, 75);
+        color: white;
+        th {
+          padding: 22px;
+          text-align: center;
+          border-right: 1px solid #1d1f27;
+        }
+        th:last-child {
+          border-right: none;
+        }
+      }
+
+      tbody {
+        tr {
+          cursor: pointer;
+          transition: background-color 0.2s ease;
+
+          td {
+            padding: 10px;
+            border-bottom: 1px solid #343847;
+            border-right: 1px solid #343847;
+          }
+
+          td:last-child {
+            border-right: none;
+          }
+
+          &:hover {
+            background-color: #f2f7fa;
+
+            .notification-bar-container {
+              background-color: rgb(71, 71, 71);
+              transition: 0.3s;
+            }
+          }
+
+          &.selected-row {
+            background-color: #d6eaf8;
+
+            td.notification-cell {
+              .notification-bar-container {
+                background-color: black;
+              }
+            }
+          }
+        }
+
+        .notification-cell {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          .notification-count {
+            font-weight: bold;
+            color: black;
+            min-width: 30px;
+            text-align: left;
+          }
+
+          .notification-bar-container {
+            width: 40%;
+            height: 0.6rem;
+            background-color: #eee;
+            border-radius: 10px;
+            transition: 0.3s;
+            overflow: hidden;
+
+            .notification-bar {
+              height: 100%;
+              transition: width 0.4s ease;
+            }
+          }
+        }
+      }
+    }
+
+    .agent-task-assign-view-outer-popup-footer {
+      margin-top: 2%;
+      width: 100%;
+      height: 14%;
+      background-color: rgb(40, 61, 75);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      button {
+        width: 15%;
+        height: 50%;
+        background-color: #b6c7d3;
+        color: rgb(0, 0, 0);
+        border-radius: 15px;
+        outline: none;
+        border: none;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        background-color: #647f92;
+        color: rgb(0, 0, 0);
+        transition: 0.3s;
+      }
+    }
+  }
+}

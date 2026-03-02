@@ -10,7 +10,7 @@ import DataControllerCredentialSubjectView from "../dataController/DataControlle
 import DarkenOverlay from "./DarkenOverlay";
 import DataAgentLoginModal from "./DataAgentLoginModal";
 import AdminOperations from "../../services/AdminOperations";
-import AdministratorDashboard from "../Admin/AdminstratorDashboard";
+import AgentTaskAssignModal from "./AgentTaskAssignModal";
 
 class DataControllerLoginModal extends React.Component {
   constructor() {
@@ -36,6 +36,8 @@ class DataControllerLoginModal extends React.Component {
       adminLoggedInSuccessfully: false,
       userData: null,
       defaultView: true,
+      viewAssignTaskModal: false,
+      assignTasks: false,
     };
   }
   handleLogout = () => {
@@ -55,6 +57,8 @@ class DataControllerLoginModal extends React.Component {
       selectedSubject: null,
       showSubjectPopup: false,
       comparisonItem: null,
+      viewAssignTaskModal: false,
+      assignTasks: false,
     });
 
     if (this.props.onUserLogout) {
@@ -74,16 +78,35 @@ class DataControllerLoginModal extends React.Component {
       orgPassword: this.passwordRef.current.value,
       adminUsername: this.usernameRef.current.value,
       adminPassword: this.passwordRef.current.value,
+      notificationCountRetrieval: false,
+    };
+
+    const payloadNotify = {
+      orgUsername: this.usernameRef.current.value,
+      orgPassword: this.passwordRef.current.value,
+      adminUsername: this.usernameRef.current.value,
+      adminPassword: this.passwordRef.current.value,
+      notificationCountRetrieval: true,
     };
     if (orgAdminChecked) {
       LoginService.LoginDataController(payload)
         .then((response) => {
           console.log("Login success 01:", response.data.data);
 
-          this.setState({
-            isAdminLoginSuccess: true,
-            userData: response.data.data,
-          });
+          LoginService.LoginDataController(payloadNotify)
+            .then((response) => {
+              this.setState({
+                isAdminLoginSuccess: true,
+                userData: response.data.data,
+              });
+            })
+            .catch((error) => {
+              console.error("Notification Rendering failed:", error);
+              alert(
+                error.response?.data?.responseMessage ||
+                  "Notification Fetching failed. Please try again.",
+              );
+            });
         })
         .catch((error) => {
           AdminOperations.GetAdminData(payload)
@@ -305,6 +328,34 @@ class DataControllerLoginModal extends React.Component {
       });
   };
 
+  handleTaskAssignment = (event) => {
+    event.preventDefault();
+    const payload = {
+      dcCode: this.state.userData?.id,
+      isAgentAlert: false,
+      isTaskAssign: true,
+    };
+
+    DataControllerOperations.requestAssociatedDataSubjectsWithOrganization(
+      payload,
+    )
+      .then((response) => {
+        console.log("Pending Data Fetched :", response?.data);
+
+        this.setState({
+          assignTasks: !this.state.assignTasks,
+          associatedData: response.data.data,
+        });
+      })
+      .catch((error) => {
+        console.error("Pending Data Fetched failed:", error.response || error);
+        alert(
+          error.response?.data?.responseMessage ||
+            "Pending Data Fetchingfailed. Please try again.",
+        );
+      });
+  };
+
   fetchUniqueDataOfCustomer = (item) => {
     switch (item.dcCode?.identificationKey?.code) {
       case "NIC":
@@ -366,7 +417,7 @@ class DataControllerLoginModal extends React.Component {
           return null;
       }
     } else {
-      switch (item.activityStatus?.code) {
+      switch (item.adminActivityStatus?.code) {
         case "PEND":
           return (
             <img
@@ -436,7 +487,7 @@ class DataControllerLoginModal extends React.Component {
           return null;
       }
     } else {
-      switch (item.activityStatus?.code) {
+      switch (item.adminActivityStatus?.code) {
         case "PEND":
           return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-pending";
 
@@ -474,20 +525,23 @@ class DataControllerLoginModal extends React.Component {
   handleSubjectCardClick = (item, isAdminLoginSuccess) => {
     console.log("Subject card clicked:", item);
     try {
-      if (isAdminLoginSuccess) {
-        if (item.adminActivityStatus?.code === "APPR") {
-          return alert("Already Approved");
-        }
-        if (item.adminActivityStatus?.code === "REJC") {
-          return alert("Already Rejected");
-        }
-      } else {
-        if (item.activityStatus?.code === "QUEUED") {
-          return alert("Queued By Agent");
-        }
-        if (item.activityStatus?.code === "REJC") {
-          return alert("Rejected By Agent");
-        }
+      if (item.activityStatus?.code === "QUEUED") {
+        alert("Queued By Agent");
+      }
+      if (item.activityStatus?.code === "REJC") {
+        alert(
+          "This request had already been rejected by an Agent. Please click okay to provide your feedback on the rejection / approval.",
+        );
+      }
+      if (item.activityStatus?.code === "APPR") {
+        alert(
+          "This request had already been approved by an Agent. Please click okay to provide your feedback on the rejection / approval.",
+        );
+      }
+      if (item.activityStatus?.code === "SKIP") {
+        alert(
+          "This request had already been skipped by an Agent. Please click okay to provide your feedback on the rejection / approval.",
+        );
       }
       const flatOld = this.flattenObject(JSON.parse(item.backupData || "{}"));
       const flatNew = this.flattenObject(
@@ -608,6 +662,12 @@ class DataControllerLoginModal extends React.Component {
                 </div>
               </div>
               <div className="data-controller-profile-result-div-middle-2-bottom">
+                <button
+                  className="data-controller-profile-result-div-middle-2-bottom-btn"
+                  onClick={this.handleTaskAssignment}
+                >
+                  Assign tasks
+                </button>
                 <button
                   className="data-controller-profile-result-div-middle-2-bottom-btn"
                   onClick={this.handleLogout}
@@ -856,7 +916,7 @@ class DataControllerLoginModal extends React.Component {
                       <div className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action">
                         <span className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-dropdown">
                           {(() => {
-                            switch (item.activityStatus?.code) {
+                            switch (item.adminActivityStatus?.code) {
                               case "PEND":
                                 return "Pending";
                               case "APPR":
@@ -875,7 +935,72 @@ class DataControllerLoginModal extends React.Component {
                   ))}
               </div>
             </div>
-            {this.state.showSubjectPopup && this.state.comparisonItem && (
+
+            {/* Assign tasks to agents under the controller  ----> START */}
+            <div
+              className={`data-controller-profile-data-subjects-alert-div ${
+                this.state.assignTasks ? "active" : ""
+              }`}
+            >
+              <div className="data-controller-profile-data-subjects-alert-div-top-outer">
+                <button
+                  type="button"
+                  className="data-controller-profile-data-subjects-alert-div-top-outer-form-cancel-btn"
+                  onClick={() => this.setState({ assignTasks: false })}
+                >
+                  cancel
+                </button>
+              </div>
+
+              <div className="data-controller-profile-data-subjects-alert-div-middle-outer">
+                {this.state.associatedData &&
+                  this.state.associatedData.map((item) => (
+                    <div
+                      key={item.id}
+                      className={this.fetchClassNameFromActivityStatus(
+                        item,
+                        this.state.isAdminLoginSuccess,
+                      )}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        this.handleSubjectCardClick(
+                          item,
+                          this.state.isAdminLoginSuccess,
+                        );
+                      }}
+                    >
+                      <div className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-field-name">
+                        {item.dsCode?.firstName} {item.dsCode?.lastName}
+                      </div>
+
+                      <div className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-ds-unique">
+                        {this.fetchUniqueDataOfCustomer(item)}
+                      </div>
+
+                      <div className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-activity-status">
+                        {this.fetchIconForActivityStatus(
+                          item,
+                          this.state.isAdminLoginSuccess,
+                        )}
+                      </div>
+
+                      <div className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action">
+                        <button
+                          className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-dropdown-agt-btn"
+                          onClick={() =>
+                            this.setState({ viewAssignTaskModal: true })
+                          }
+                        >
+                          Assign task
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+            {/* Assign tasks to agents under the controller  ----> STOP */}
+
+            {this.state.showSubjectPopup && this.state.comparisonItem && !this.state.viewAssignTaskModal && (
               <DataControllerCredentialSubjectView
                 comparisonItem={this.state.comparisonItem}
                 selectedSubject={this.state.selectedSubject}
@@ -897,6 +1022,21 @@ class DataControllerLoginModal extends React.Component {
             userData={this.state.userData}
             onUserLogout={this.props.onUserLogout}
           />
+        )}
+
+        {this.state.viewAssignTaskModal && (
+          <div className="agent-task-assign-modal-overlay" onClick={(e) => e.stopPropagation()}>
+            <AgentTaskAssignModal
+              data={this.state.selectedSubject}
+              onClose={() =>
+                this.setState({
+                  viewAssignTaskModal: false,
+                selectedSubject: null,
+                comparisonItem: null,
+              })
+            }
+          />
+          </div>
         )}
       </>
     );

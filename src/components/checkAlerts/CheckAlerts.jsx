@@ -39,8 +39,6 @@ class CheckAlerts extends React.Component {
 
   fetchIconForActivityStatus = (item) => {
     if (
-      item.activityStatus?.code === "APPR" ||
-      item.activityStatus?.code === "REJC" ||
       item.adminActivityStatus?.code === "APPR" ||
       item.adminActivityStatus?.code === "REJC"
     ) {
@@ -67,7 +65,7 @@ class CheckAlerts extends React.Component {
           return null;
       }
     } else {
-      switch (item.subjectActivityStatus?.code) {
+      switch (item.adminActivityStatus?.code) {
         case "PEND":
           return (
             <img
@@ -120,8 +118,6 @@ class CheckAlerts extends React.Component {
 
   fetchClassNameFromActivityStatus = (item) => {
     if (
-      item.activityStatus?.code === "APPR" ||
-      item.activityStatus?.code === "REJC" ||
       item.adminActivityStatus?.code === "APPR" ||
       item.adminActivityStatus?.code === "REJC"
     ) {
@@ -136,7 +132,7 @@ class CheckAlerts extends React.Component {
           return null;
       }
     } else {
-      switch (item.subjectActivityStatus?.code) {
+      switch (item.adminActivityStatus?.code) {
         case "PEND":
           return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-pending";
 
@@ -260,7 +256,7 @@ class CheckAlerts extends React.Component {
                   <div className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action">
                     <span className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-dropdown">
                       {(() => {
-                        switch (item.subjectActivityStatus?.code) {
+                        switch (item.adminActivityStatus?.code) {
                           case "PEND":
                             return "Pending";
                           case "APPR":

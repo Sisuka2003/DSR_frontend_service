@@ -409,12 +409,12 @@
             width: 100%;
             height: 20%;
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
             align-items: center;
             text-align: center;
 
             .data-controller-profile-result-div-middle-2-bottom-btn {
-              width: 80%;
+              width: 43%;
               height: 40%;
               border-radius: 15px;
               border-style: none;
@@ -1200,6 +1200,24 @@
                 background-color: rgba(87, 87, 87, 0.158);
                 cursor: pointer;
                 font-size: 80%;
+              }
+
+              .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-dropdown-agt-btn {
+                background-color: rgba(87, 87, 87, 0.158);
+                transition: 0.3s;
+                outline: none;
+                text-align: left;
+                border-radius: 35px;
+                cursor: pointer;
+                font-size: 80%;
+                border: none;
+                padding: 10px 20px;
+              }
+
+              .data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-dropdown-agt-btn:hover {
+                background-color: #2a3446;
+                transition: 0.3s;
+                color: white;
               }
             }
           }

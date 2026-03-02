@@ -116,7 +116,10 @@ class UserProfile extends React.Component {
                 editableData: {},
               });
 
-              this.setState({ internalCustomerData: updatedCustomerData });
+              this.setState((prevState) => ({
+                internalCustomerData: updatedCustomerData,
+                notifications: prevState.notifications + 1,
+              }));
             }
           })
           .catch((error) => {
@@ -180,6 +183,7 @@ class UserProfile extends React.Component {
           isDelete: false,
           editableData: {},
           deleteConfirmed: false,
+          notifications: this.state.notifications - 1,
         });
         if (this.props.onDeleteSuccess) {
           this.props.onDeleteSuccess();
