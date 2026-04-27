@@ -1,36 +1,26 @@
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 
-const ACT_ORGANIZATION_RETRIEVAL_FOR_DROPDOWN_URL =
-  "http://localhost:8000/app/v1/commons/getActiveOrganizations";
-  
-const ACT_IDENTIFIER_RETRIEVAL_FOR_DROPDOWN_URL =
-  "http://localhost:8000/app/v1/commons/getKeyIdentifiers";
-const API_OTP_BASE_URL = "http://localhost:8000/api/v1/operations/datasubject";
+const ACT_ORGANIZATION_RETRIEVAL_FOR_DROPDOWN_URL = "/app/v1/commons/getActiveOrganizations";
+const ACT_IDENTIFIER_RETRIEVAL_FOR_DROPDOWN_URL = "/app/v1/commons/getKeyIdentifiers";
+const API_OTP_BASE_URL = "/api/v1/operations/datasubject";
 
 class CommonDataExtraction {
   getActiveOrganizationsForDropdown() {
-    return axios.get(ACT_ORGANIZATION_RETRIEVAL_FOR_DROPDOWN_URL);
+    return axiosInstance.get(ACT_ORGANIZATION_RETRIEVAL_FOR_DROPDOWN_URL);
   }
 
   getActiveIdentifiers() {
-    return axios.get(ACT_IDENTIFIER_RETRIEVAL_FOR_DROPDOWN_URL);
+    return axiosInstance.get(ACT_IDENTIFIER_RETRIEVAL_FOR_DROPDOWN_URL);
   }
+
   otpCodeRequest(payload) {
     console.log("otpCodeRequest data subject Payload:", payload);
-    return axios.post(`${API_OTP_BASE_URL}/generateOtpCode`, payload, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    return axiosInstance.post(`${API_OTP_BASE_URL}/generateOtpCode`, payload);
   }
 
   otpCodeVerification(payload) {
     console.log("otpCodeVerification data subject Payload:", payload);
-    return axios.post(`${API_OTP_BASE_URL}/verifyOtpCode`, payload, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    return axiosInstance.post(`${API_OTP_BASE_URL}/verifyOtpCode`, payload);
   }
 }
 
