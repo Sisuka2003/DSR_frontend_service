@@ -21,17 +21,34 @@ class AgentTaskAssignModal extends React.Component {
   };
 
   componentDidMount() {
+    console.log("🔍 AgentTaskAssignModal mounted");
+    console.log("🔍 Props data:", this.props.data);
+
+    if (!this.props.data) {
+      console.log("❌ No data prop - returning early");
+      return;
+    }
+
+    if (!this.props.data.dcCode || !this.props.data.dcCode.id) {
+      console.log("❌ No dcCode or dcCode.id - returning early");
+      return;
+    }
+
     const payload = {
-        dcCode: this.props.data.dcCode.id,
+      dcCode: this.props.data.dcCode.id,
     };
+
+    console.log("📤 Calling FetchAllAgentInformation with:", payload);
+
     AgentOperations.FetchAllAgentInformation(payload)
       .then((response) => {
+        console.log("✅ Success:", response.data);
         this.setState({
           agentDataRecordsUnderController: response.data.data,
         });
       })
       .catch((error) => {
-        console.error("Error fetching agent data:", error);
+        console.error("❌ Error fetching agent data:", error);
       });
   }
 
@@ -59,7 +76,9 @@ class AgentTaskAssignModal extends React.Component {
 
     AgentOperations.assignTaskToAgent(payload)
       .then((response) => {
-        return alert(response.data.responseMessage || "Task assigned successfully.");
+        return alert(
+          response.data.responseMessage || "Task assigned successfully.",
+        );
       })
       .catch((error) => {
         console.error("Task Assigning failed:", error.response || error);
