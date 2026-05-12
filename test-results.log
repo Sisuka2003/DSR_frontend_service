@@ -1,0 +1,273 @@
+
+> dsr_frontend_service@0.1.0 test
+> react-scripts test --testPathPattern=services/tests --watchAll=false --verbose
+
+FAIL src/services/tests/AgentOperations.test.js
+  ● Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    D:\IIT\Msc\research_project_final\DSR_frontend_service\node_modules\axios\index.js:1
+    ({"Object.<anonymous>":function(module,exports,require,__dirname,__filename,jest){import axios from './lib/axios.js';
+                                                                                      ^^^^^^
+
+    SyntaxError: Cannot use import statement outside a module
+
+    [0m[31m[1m>[22m[39m[90m 1 |[39m [36mimport[39m axios [36mfrom[39m [32m"axios"[39m[33m;[39m
+     [90m   |[39m [31m[1m^[22m[39m
+     [90m 2 |[39m [36mimport[39m { encryptPayload[33m,[39m decryptResponse } [36mfrom[39m [32m"./encryption"[39m[33m;[39m
+     [90m 3 |[39m
+     [90m 4 |[39m [36mconst[39m axiosInstance [33m=[39m axios[33m.[39mcreate({[0m
+
+      at Runtime.createScriptFromCode (node_modules/jest-runtime/build/index.js:1728:14)
+      at Object.<anonymous> (src/utils/axiosInstance.js:1:1)
+      at Object.<anonymous> (src/services/AgentOperations.js:1:1)
+      at Object.<anonymous> (src/services/tests/AgentOperations.test.js:1:1)
+
+(node:3884) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+FAIL src/services/tests/DataSubjectOperations.test.js
+  ● Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    D:\IIT\Msc\research_project_final\DSR_frontend_service\node_modules\axios\index.js:1
+    ({"Object.<anonymous>":function(module,exports,require,__dirname,__filename,jest){import axios from './lib/axios.js';
+                                                                                      ^^^^^^
+
+    SyntaxError: Cannot use import statement outside a module
+
+    [0m[31m[1m>[22m[39m[90m 1 |[39m [36mimport[39m axios [36mfrom[39m [32m"axios"[39m[33m;[39m
+     [90m   |[39m [31m[1m^[22m[39m
+     [90m 2 |[39m [36mimport[39m { encryptPayload[33m,[39m decryptResponse } [36mfrom[39m [32m"./encryption"[39m[33m;[39m
+     [90m 3 |[39m
+     [90m 4 |[39m [36mconst[39m axiosInstance [33m=[39m axios[33m.[39mcreate({[0m
+
+      at Runtime.createScriptFromCode (node_modules/jest-runtime/build/index.js:1728:14)
+      at Object.<anonymous> (src/utils/axiosInstance.js:1:1)
+      at Object.<anonymous> (src/services/DataSubjectOperations.js:1:1)
+      at Object.<anonymous> (src/services/tests/DataSubjectOperations.test.js:1:1)
+
+(node:17304) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+FAIL src/services/tests/CommonService.test.js
+  ● Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    D:\IIT\Msc\research_project_final\DSR_frontend_service\node_modules\axios\index.js:1
+    ({"Object.<anonymous>":function(module,exports,require,__dirname,__filename,jest){import axios from './lib/axios.js';
+                                                                                      ^^^^^^
+
+    SyntaxError: Cannot use import statement outside a module
+
+    [0m[31m[1m>[22m[39m[90m 1 |[39m [36mimport[39m axios [36mfrom[39m [32m"axios"[39m[33m;[39m
+     [90m   |[39m [31m[1m^[22m[39m
+     [90m 2 |[39m [36mimport[39m { encryptPayload[33m,[39m decryptResponse } [36mfrom[39m [32m"./encryption"[39m[33m;[39m
+     [90m 3 |[39m
+     [90m 4 |[39m [36mconst[39m axiosInstance [33m=[39m axios[33m.[39mcreate({[0m
+
+      at Runtime.createScriptFromCode (node_modules/jest-runtime/build/index.js:1728:14)
+      at Object.<anonymous> (src/utils/axiosInstance.js:1:1)
+      at Object.<anonymous> (src/services/CommonService.js:1:1)
+      at Object.<anonymous> (src/services/tests/CommonService.test.js:1:1)
+
+(node:12512) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+FAIL src/services/tests/LoginService.test.js
+  ● Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    D:\IIT\Msc\research_project_final\DSR_frontend_service\node_modules\axios\index.js:1
+    ({"Object.<anonymous>":function(module,exports,require,__dirname,__filename,jest){import axios from './lib/axios.js';
+                                                                                      ^^^^^^
+
+    SyntaxError: Cannot use import statement outside a module
+
+    [0m[31m[1m>[22m[39m[90m 1 |[39m [36mimport[39m axios [36mfrom[39m [32m"axios"[39m[33m;[39m
+     [90m   |[39m [31m[1m^[22m[39m
+     [90m 2 |[39m [36mimport[39m { encryptPayload[33m,[39m decryptResponse } [36mfrom[39m [32m"./encryption"[39m[33m;[39m
+     [90m 3 |[39m
+     [90m 4 |[39m [36mconst[39m axiosInstance [33m=[39m axios[33m.[39mcreate({[0m
+
+      at Runtime.createScriptFromCode (node_modules/jest-runtime/build/index.js:1728:14)
+      at Object.<anonymous> (src/utils/axiosInstance.js:1:1)
+      at Object.<anonymous> (src/services/LoginService.js:1:1)
+      at Object.<anonymous> (src/services/tests/LoginService.test.js:1:1)
+
+(node:18724) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+FAIL src/services/tests/AdminOperations.test.js
+  ● Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    D:\IIT\Msc\research_project_final\DSR_frontend_service\node_modules\axios\index.js:1
+    ({"Object.<anonymous>":function(module,exports,require,__dirname,__filename,jest){import axios from './lib/axios.js';
+                                                                                      ^^^^^^
+
+    SyntaxError: Cannot use import statement outside a module
+
+    [0m[31m[1m>[22m[39m[90m 1 |[39m [36mimport[39m axios [36mfrom[39m [32m"axios"[39m[33m;[39m
+     [90m   |[39m [31m[1m^[22m[39m
+     [90m 2 |[39m [36mimport[39m { encryptPayload[33m,[39m decryptResponse } [36mfrom[39m [32m"./encryption"[39m[33m;[39m
+     [90m 3 |[39m
+     [90m 4 |[39m [36mconst[39m axiosInstance [33m=[39m axios[33m.[39mcreate({[0m
+
+      at Runtime.createScriptFromCode (node_modules/jest-runtime/build/index.js:1728:14)
+      at Object.<anonymous> (src/utils/axiosInstance.js:1:1)
+      at Object.<anonymous> (src/services/AdminOperations.js:1:1)
+      at Object.<anonymous> (src/services/tests/AdminOperations.test.js:1:1)
+
+(node:12036) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+FAIL src/services/tests/DataControllerOperations.test.js
+  ● Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    D:\IIT\Msc\research_project_final\DSR_frontend_service\node_modules\axios\index.js:1
+    ({"Object.<anonymous>":function(module,exports,require,__dirname,__filename,jest){import axios from './lib/axios.js';
+                                                                                      ^^^^^^
+
+    SyntaxError: Cannot use import statement outside a module
+
+    [0m[31m[1m>[22m[39m[90m 1 |[39m [36mimport[39m axios [36mfrom[39m [32m"axios"[39m[33m;[39m
+     [90m   |[39m [31m[1m^[22m[39m
+     [90m 2 |[39m [36mimport[39m { encryptPayload[33m,[39m decryptResponse } [36mfrom[39m [32m"./encryption"[39m[33m;[39m
+     [90m 3 |[39m
+     [90m 4 |[39m [36mconst[39m axiosInstance [33m=[39m axios[33m.[39mcreate({[0m
+
+      at Runtime.createScriptFromCode (node_modules/jest-runtime/build/index.js:1728:14)
+      at Object.<anonymous> (src/utils/axiosInstance.js:1:1)
+      at Object.<anonymous> (src/services/DataControllerOperations.js:1:1)
+      at Object.<anonymous> (src/services/tests/DataControllerOperations.test.js:1:1)
+
+(node:3464) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Test Suites: 6 failed, 6 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        30.717 s
+Ran all test suites matching /services\\tests/i.
