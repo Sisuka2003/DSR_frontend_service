@@ -129,7 +129,7 @@ class CheckAlerts extends React.Component {
           return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-rejected";
 
         default:
-          return null;
+          return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-rejected";
       }
     } else {
       switch (item.adminActivityStatus?.code) {
@@ -148,7 +148,7 @@ class CheckAlerts extends React.Component {
         case "SKIP":
           return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-skipped";
         default:
-          return null;
+          return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-rejected";
       }
     }
   };
@@ -277,9 +277,11 @@ class CheckAlerts extends React.Component {
         </div>
         {this.state.showSubjectPopup && this.state.comparisonItem && (
           <DataControllerCredentialSubjectView
+            isAnAgent={false}
             comparisonItem={this.state.comparisonItem}
             selectedSubject={this.state.selectedSubject}
             data={this.state.selectedSubject}
+            isAnAdmin={false}
             isUserProfile={true}
             onClose={() => {
               this.setState({

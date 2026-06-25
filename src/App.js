@@ -3,14 +3,13 @@ import "./App.css";
 import Dashboard from "./components/dashboard/Dashboard";
 import AdministratorDashboard from "./components/Admin/AdminstratorDashboard";
 import { useState, useEffect } from "react";
-import { initiateKeyExchange } from "./utils/encryption";  // ← new
+import { initiateKeyExchange } from "./utils/encryption";
 
 function App() {
   const [currentView, setCurrentView] = useState("DEFAULT");
   const [adminCredentials, setAdminCredentials] = useState(null);
   const [secureReady, setSecureReady] = useState(false);  // ← new
 
-  // ← new — runs once on app start
   useEffect(() => {
     initiateKeyExchange()
       .then(() => setSecureReady(true))
@@ -32,7 +31,6 @@ function App() {
     setCurrentView("DEFAULT");
   };
 
-  // ← new — don't render anything until secure session is ready
   if (!secureReady) {
     return <div style={{ padding: "2rem" }}>Establishing secure session...</div>;
   }

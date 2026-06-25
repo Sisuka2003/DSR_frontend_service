@@ -25,6 +25,7 @@ class DataControllerCredentialSubjectView extends React.Component {
     let payload;
     if (this.props.isUserProfile) {
       payload = {
+        id: this.props.selectedSubject?.id,
         dsCode: this.props.selectedSubject?.dsCode?.id,
         dcCode: this.props.selectedSubject?.dcCode?.id,
         status: this.props.selectedSubject?.status?.id,
@@ -32,9 +33,11 @@ class DataControllerCredentialSubjectView extends React.Component {
       };
     } else {
       payload = {
+        id: this.props.selectedSubject?.id,
         dsCode: this.props.selectedSubject?.dsCode?.id,
         dcCode: this.props.selectedSubject?.dcCode?.id,
         status: this.props.selectedSubject?.status?.id,
+        isUserProfile: false,
       };
     }
 
@@ -57,7 +60,10 @@ class DataControllerCredentialSubjectView extends React.Component {
     const payload = {
       collectedData: this.props.selectedSubject?.collectedData,
       recordId: this.props.selectedSubject?.id,
-      isAnAdmin: true,
+      isAnAdmin: this.props.isAnAdmin,
+      isAnAgent: this.props.isAnAgent,
+      dsCode: this.props.selectedSubject?.dsCode?.id,
+      dcCode: this.props.selectedSubject?.dcCode?.id,
       status: this.props.selectedSubject?.status?.id,
     };
 

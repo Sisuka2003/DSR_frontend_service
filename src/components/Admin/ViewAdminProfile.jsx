@@ -103,6 +103,7 @@ class ViewAdminProfile extends React.Component {
       orgName: this.state.orgName,
       username: this.state.username,
       password: this.state.password,
+      orgEmailAddress: this.state.emailAddress,
       idKey: this.state.idKey,
       agentCount: this.state.agentCount,
     };
@@ -304,6 +305,16 @@ class ViewAdminProfile extends React.Component {
                       className="admin-view-profile-section-right-content-top-form-org-password"
                       required
                       value={this.state.password}
+                      onChange={this.handleControllerInputChange}
+                    />
+
+                    <input
+                      type="email"
+                      name="emailAddress"
+                      placeholder="Organization Email"
+                      className="admin-view-profile-section-right-content-top-form-org-username"
+                      required
+                      value={this.state.email}
                       onChange={this.handleControllerInputChange}
                     />
                     <input

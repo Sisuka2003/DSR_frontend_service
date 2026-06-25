@@ -284,7 +284,13 @@ class DataAgentLoginModal extends React.Component {
           />
         );
       default:
-        return null;
+        return (
+          <img
+            className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity"
+            src={rejectedIcon}
+            alt="Rejected"
+          />
+        );
     }
   };
 
@@ -305,7 +311,7 @@ class DataAgentLoginModal extends React.Component {
       case "SKIP":
         return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-skipped";
       default:
-        return null;
+        return "data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-rejected";
     }
   };
 
@@ -667,6 +673,8 @@ class DataAgentLoginModal extends React.Component {
                               return "Queued";
                             case "SKIP":
                               return "Skipped";
+                            default:
+                              return "Rejected";
                           }
                         })()}
                       </span>
@@ -677,9 +685,11 @@ class DataAgentLoginModal extends React.Component {
           </div>
           {this.state.showSubjectPopup && this.state.comparisonItem && (
             <DataControllerCredentialSubjectView
+              isAnAgent={true}
               comparisonItem={this.state.comparisonItem}
               selectedSubject={this.state.selectedSubject}
               data={this.state.selectedSubject}
+              isAnAdmin={false}
               onClose={() =>
                 this.setState({
                   showSubjectPopup: false,
@@ -687,6 +697,7 @@ class DataAgentLoginModal extends React.Component {
                   comparisonItem: null,
                 })
               }
+              isUserProfile={false}
             />
           )}
         </div>

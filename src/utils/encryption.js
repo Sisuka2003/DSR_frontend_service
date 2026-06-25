@@ -1,14 +1,12 @@
 let sharedKey = null;
 
 export async function initiateKeyExchange() {
-  // Generate client ECDH keypair
   const clientKeyPair = await crypto.subtle.generateKey(
     { name: "ECDH", namedCurve: "P-256" },
     true,
     ["deriveKey"],
   );
 
-  // Export client public key as Base64
   const clientPublicKeyBuffer = await crypto.subtle.exportKey(
     "spki",
     clientKeyPair.publicKey,
@@ -17,7 +15,6 @@ export async function initiateKeyExchange() {
     String.fromCharCode(...new Uint8Array(clientPublicKeyBuffer)),
   );
 
-  // Send client public key to backend
   const res = await fetch("https://localhost:8000/app/v1/commons/keyExchange", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -27,7 +24,6 @@ export async function initiateKeyExchange() {
 
   const { publicKey: serverPublicKeyB64 } = await res.json();
 
-  // Import server public key
   const serverPublicKeyBytes = Uint8Array.from(atob(serverPublicKeyB64), (c) =>
     c.charCodeAt(0),
   );
@@ -39,12 +35,11 @@ export async function initiateKeyExchange() {
     [],
   );
 
-  // Derive shared AES-256-GCM key — never transmitted over the network
   sharedKey = await crypto.subtle.deriveKey(
     { name: "ECDH", public: serverPublicKey },
     clientKeyPair.privateKey,
     { name: "AES-GCM", length: 256 },
-    true, // ← changed to true temporarily for debugging
+    true, 
     ["encrypt", "decrypt"]
 );
 
@@ -76,7 +71,6 @@ export async function decryptResponse(iv, ciphertext) {
     const ciphertextBytes = Uint8Array.from(atob(ciphertext), c => c.charCodeAt(0));
 
 
-    // Export and log the sharedKey for comparison
     const exportedKey = await crypto.subtle.exportKey("raw", sharedKey);
     const keyB64 = btoa(String.fromCharCode(...new Uint8Array(exportedKey)));
 

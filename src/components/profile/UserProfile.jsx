@@ -123,6 +123,7 @@ class UserProfile extends React.Component {
             }
           })
           .catch((error) => {
+            console.error("Data fetching failed:", error.response?.data);
             alert(
               error.response?.data?.responseMessage ||
                 "Data Fetching Went Wrong. Please try again.",
@@ -130,7 +131,7 @@ class UserProfile extends React.Component {
           });
       })
       .catch((error) => {
-        console.error("Modification failed:", error.response || error);
+        console.error("Modification failed:", error.response?.data);
         alert(
           error.response?.data?.responseMessage ||
             "Modification failed. Please try again.",
@@ -190,7 +191,7 @@ class UserProfile extends React.Component {
         }
       })
       .catch((error) => {
-        console.error("Deletion failed:", error.response || error);
+        console.error("Deletion failed:", error.response?.data);
         alert(
           error.response?.data?.responseMessage ||
             "Deletion failed. Please try again.",
@@ -231,7 +232,7 @@ class UserProfile extends React.Component {
           this.setState({ loading: false });
         })
         .catch((error) => {
-          console.error("Report Generation failed:", error.response || error);
+          console.error("Report Generation failed:", error.response?.data);
           alert(
             error.response?.data?.responseMessage ||
               "Report Generation failed. Please try again.",
@@ -284,7 +285,7 @@ class UserProfile extends React.Component {
       .catch((error) => {
         console.error(
           "Agent Associated Data Fetched failed:",
-          error.response || error,
+          error.response?.data,
         );
         alert(
           error.response?.data?.responseMessage ||

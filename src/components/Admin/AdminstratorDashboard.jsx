@@ -17,6 +17,7 @@ class AdministratorDashboard extends React.Component {
     totalRecordCount: 0,
     pendingRecords: 0,
     rejectedRecords: 0,
+    expiredRecords: 0,
     queuedRecords: 0,
     ApprovedRecords: 0,
     totalAdminCount: 0,
@@ -58,6 +59,7 @@ class AdministratorDashboard extends React.Component {
           queuedRecords: response?.data?.data.queuedRecordsCount ?? 0,
           ApprovedRecords: response?.data?.data.approvedRecordsCount ?? 0,
           rejectedRecords: response?.data?.data.rejectedRecordsCount ?? 0,
+          expiredRecords: response?.data?.data.expiredRecordsCount ?? 0,
         });
       })
       .catch((error) => {
@@ -92,6 +94,7 @@ class AdministratorDashboard extends React.Component {
             queuedRecords={this.state.queuedRecords}
             approvedRecords={this.state.ApprovedRecords}
             rejectedRecords={this.state.rejectedRecords}
+            expiredRecords={this.state.expiredRecords}
           />
         </div>
       </section>

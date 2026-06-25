@@ -3,13 +3,12 @@ import { encryptPayload, decryptResponse } from "./encryption";
 
 const axiosInstance = axios.create({
     baseURL: "https://localhost:8000",
-    withCredentials: true, // sends session cookie with every request
+    withCredentials: true, 
     headers: {
         "Content-Type": "application/json"
     }
 });
 
-// Encrypt every outgoing POST/PUT/PATCH request body
 axiosInstance.interceptors.request.use(async (config) => {
     if (config.data) {
         config.data = await encryptPayload(config.data);
@@ -17,12 +16,10 @@ axiosInstance.interceptors.request.use(async (config) => {
     return config;
 }, (error) => Promise.reject(error));
 
-// Decrypt every incoming response body
 axiosInstance.interceptors.response.use(async (response) => {
     try {
         const data = response.data;
 
-        // Only decrypt if response has both iv and ciphertext fields
         if (data && typeof data === "object" && data.iv && data.ciphertext) {
             response.data = await decryptResponse(data.iv, data.ciphertext);
         }
@@ -30,6 +27,18 @@ axiosInstance.interceptors.response.use(async (response) => {
         console.error("Decryption failed for response:", error);
     }
     return response;
-}, (error) => Promise.reject(error));
+}, async (error) => {
+    try {
+        if (error.response && error.response.data) {
+            const data = error.response.data;
+            if (data && typeof data === "object" && data.iv && data.ciphertext) {
+                error.response.data = await decryptResponse(data.iv, data.ciphertext);
+            }
+        }
+    } catch (decryptError) {
+        console.error("Decryption failed for error response:", decryptError);
+    }
+    return Promise.reject(error);
+});
 
 export default axiosInstance;

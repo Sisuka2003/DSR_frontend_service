@@ -415,7 +415,13 @@ class DataControllerLoginModal extends React.Component {
             />
           );
         default:
-          return null;
+         return (
+            <img
+              className="data-controller-profile-data-subjects-alert-div-middle-outer-alert-card-action-fetchIconForActivity"
+              src={rejectedIcon}
+              alt="Rejected"
+            />
+          );
       }
     } else {
       switch (item.adminActivityStatus?.code) {
@@ -1003,9 +1009,11 @@ class DataControllerLoginModal extends React.Component {
 
             {this.state.showSubjectPopup && this.state.comparisonItem && !this.state.viewAssignTaskModal && (
               <DataControllerCredentialSubjectView
+                isAnAgent={false}
                 comparisonItem={this.state.comparisonItem}
                 selectedSubject={this.state.selectedSubject}
                 data={this.state.selectedSubject}
+                isAnAdmin={true}
                 onClose={() =>
                   this.setState({
                     showSubjectPopup: false,
